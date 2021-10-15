@@ -33,7 +33,7 @@ const Home = () => {
 
 
               {!user && <Link
-                  to='/questionnaire-not-logged-in'
+                  to='/welcome-questionnaire'
                   className='btn btn-primary my-2 my-lg-0 py-3 px-5'
               >
                 Take Your First Quiz*
