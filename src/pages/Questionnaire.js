@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import TipsContainer from '../components/TipsContainer';
+import Modal from '../components/Modal';
 import { useAuth } from '../states/userState';
 import { buildAnswers } from '../utils';
 import firebase from 'firebase/app';
@@ -12,6 +13,7 @@ const Questionnaire = () => {
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState({});
   const [questions, setQuestions] = useState([]);
+  let [shouModal, setShowModal] = useState(true);
   let history = useHistory();
   const { user, addScoreToDb, setNotLoggedInTotal, notLoggedInTotal } = useAuth();
 
@@ -41,6 +43,10 @@ const Questionnaire = () => {
     setNotLoggedInTotal(total)
   };
 
+  const toggleModal = () => {
+    console.log("foo");
+  } 
+
   const handleSelect = (selectedIndex, e) => {
     if (e.target.classList.contains('next')) {
       if (score[14] > -1) {
@@ -67,7 +73,13 @@ const Questionnaire = () => {
 
   return (
       <div>
-        <div className='container-fluid'>
+        <Modal 
+                    isOpen={true}
+                    toggle={toggleModal} 
+          >
+            <h1>Fuck this shiiit!</h1>
+          </Modal>
+       <div className='container-fluid'>
           <div className='row questionnaire-row'>
             <div className='col-lg-6 questionnaire-left'>
               <TipsContainer index={index} />

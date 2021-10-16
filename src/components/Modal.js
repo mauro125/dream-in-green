@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import Modal from 'react-modal';
+import Q from 'react-modal';
 
 export default function Modal(props){
 
     return(
       
         <div className="modal">
-            <Modal
+            <Q
                 isOpen={ props.isOpen }
-                contentLabel="Please enter your age" >
-                <h1>Please enter your age</h1>
-                <button onClick={props.toggle}>close</button>
-            </Modal>  
+                contentLabel={props.title} >
+             {props.children}
+            </Q>  
         </div>     
     )
 }
