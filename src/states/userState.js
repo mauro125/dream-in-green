@@ -57,11 +57,12 @@ export function UserProvider({ children }) {
         });
   }
 
-  function addScoreToDb(uid, score, createdAt) {
+  function addScoreToDb(uid, score, createdAt, age) {
     usersCollection.doc(uid).update({
       scores: firebase.firestore.FieldValue.arrayUnion({
         score,
         createdAt,
+        age
       }),
       average: 100
     });
