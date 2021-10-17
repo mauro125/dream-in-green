@@ -56,7 +56,10 @@ const Questionnaire = () => {
     }
   };
 
-  const htmlOfItems = questions.map((question, i) => {
+  let uniqueQuestions = [...questions.reduce((question, obj) => question.set(obj.ques, obj),
+      new Map()).values()]
+
+  const htmlOfItems = uniqueQuestions.map((question, i) => {
     return (
         <Carousel.Item key={i}>
           <h2 className='question-title'>{question.ques}</h2>
