@@ -97,7 +97,7 @@ const Questionnaire = () => {
             </div>
             <div className='col-lg-6 px-md-5 questionnaire-right'>
               <h2 className='questionnaire-step-counter'>
-                Question {index + 1} of 15
+                Question {index + 1} of {shuffledArr.length}
               </h2>
               <Carousel
                   activeIndex={index}
