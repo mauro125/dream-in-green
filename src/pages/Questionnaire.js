@@ -80,13 +80,18 @@ const Questionnaire = () => {
 
   return (
       <div>
-      <Modal isOpen={ showModal } toggle={ toggleModal } >
-            <h1>Please enter your age:</h1>
-            <input type="number" onChange={ handleAgeChange } />
-            <button onClick={ toggleModal } >
-              Submit
-            </button>
-       </Modal>
+        {
+          (!user)? (
+            <Modal isOpen={ showModal } toggle={ toggleModal } >
+              <h1>Please enter your age:</h1>
+              <input type="number" onChange={ handleAgeChange } />
+              <button onClick={ toggleModal } >
+                Submit
+              </button>
+            </Modal>
+          ) : ""
+        }
+      
        <div className='container-fluid'>
           <div className='row questionnaire-row'>
             <div className='col-lg-6 questionnaire-left'>

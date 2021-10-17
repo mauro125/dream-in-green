@@ -94,7 +94,6 @@ export function UserProvider({ children }) {
       maxSizeMB: 0.1,
       maxWidthOrHeight: 1080,
       useWebWorker: true
-
     }
     /*
       The first parameter is the image we are compressing and the second parameter are the settings we chose for compressing the image
