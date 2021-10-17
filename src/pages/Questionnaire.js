@@ -13,7 +13,7 @@ const Questionnaire = () => {
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState({});
   const [questions, setQuestions] = useState([]);
-  let [shouModal, setShowModal] = useState(true);
+  let [showModal, setShowModal] = useState(true);
   let history = useHistory();
   const { user, addScoreToDb, setNotLoggedInTotal, notLoggedInTotal } = useAuth();
 
@@ -43,9 +43,10 @@ const Questionnaire = () => {
     setNotLoggedInTotal(total)
   };
 
-  const toggleModal = () => {
-    console.log("foo");
-  } 
+  let toggleModal = () => {
+    setShowModal( !showModal );
+    console.log("sfsdf");
+ } 
 
   const handleSelect = (selectedIndex, e) => {
     if (e.target.classList.contains('next')) {
@@ -74,10 +75,14 @@ const Questionnaire = () => {
   return (
       <div>
         <Modal 
-                    isOpen={true}
+                    isOpen={showModal}
                     toggle={toggleModal} 
           >
             <h1>Fuck this shiiit!</h1>
+            <button
+                    onClick={ toggleModal } >
+                    Fuck this Modal!!
+            </button>
           </Modal>
        <div className='container-fluid'>
           <div className='row questionnaire-row'>
