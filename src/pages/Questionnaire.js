@@ -45,7 +45,7 @@ const Questionnaire = () => {
 
   const handleSelect = (selectedIndex, e) => {
     if (e.target.classList.contains('next')) {
-      if (score[14] > -1) {
+      if (score[7] > -1) {
         handleFinish();
       } else if (score[selectedIndex - 1] > -1) {
         setIndex(selectedIndex);
@@ -71,8 +71,7 @@ const Questionnaire = () => {
       array[j] = temp;
       shuffled = true
     }
-
-    console.log(array)
+    array = array.slice(0,8)
     return array;
   }
 
@@ -106,7 +105,7 @@ const Questionnaire = () => {
                   interval={null}
                   nextIcon={
                     <div className='py-3 px-5 btn btn-primary next'>
-                      {index === 14 ? 'Submit' : 'Next'}
+                      {index === 7 ? 'Submit' : 'Next'}
                     </div>
                   }
                   prevIcon={
