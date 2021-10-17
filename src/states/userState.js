@@ -62,11 +62,9 @@ export function UserProvider({ children }) {
       average: 100
     });
   }
-
   
   function addAnonScoreToDb(age, score){
-    console.log(age);
-    anonCollection.doc(new Date().toLocaleDateString()).set({
+    anonCollection.doc().set({
       age: parseInt(age),
       score: score,
       createdAt: new Date()
@@ -76,7 +74,7 @@ export function UserProvider({ children }) {
     })
     .catch(function (error) {
       console.error('Error writing document: ', error);
-    });;
+    });
   }
 
   const [profilePic, setProfilePic] = useState(defaultProfileImage);
