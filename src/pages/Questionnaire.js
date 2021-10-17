@@ -57,9 +57,10 @@ const Questionnaire = () => {
   }
   const handleSelect = (selectedIndex, e) => {
     if (e.target.classList.contains('next')) {
+      alert(score[selectedIndex]);
       if (score[7] > -1) {
         handleFinish();
-      } else if (score[selectedIndex - 1] > -1) {
+      } else if (score[selectedIndex] > -1) {
         setIndex(selectedIndex);
       } else {
         alert('You must select an answer!');
