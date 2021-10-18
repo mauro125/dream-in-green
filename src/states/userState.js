@@ -5,15 +5,11 @@ import firebase from 'firebase/app';
 import 'firebase/storage';
 import imageCompression from 'browser-image-compression';
 
-
 const usersCollection = firestore.collection('users');
 
+const anonCollection = firestore.collection('anonymous_attempts');
+
 const userContext = createContext();
-
-
-
-
-
 
 //shortcut hook to be able to access all functions from the context when we want
 export function useAuth() {
@@ -47,7 +43,7 @@ export function UserProvider({ children }) {
         .set({
           firstName,
           lastName,
-          school,
+          school
         })
         .then(function () {
           console.log('Document successfully written!');
@@ -66,7 +62,20 @@ export function UserProvider({ children }) {
       average: 100
     });
   }
-
+  
+  function addAnonScoreToDb(age, score){
+    anonCollection.doc().set({
+      age: parseInt(age),
+      score: score,
+      createdAt: new Date()
+    })
+    .then(function () {
+      console.log('Document successfully written!');
+    })
+    .catch(function (error) {
+      console.error('Error writing document: ', error);
+    });
+  }
 
   const [profilePic, setProfilePic] = useState(defaultProfileImage);
 
@@ -85,9 +94,7 @@ export function UserProvider({ children }) {
       maxSizeMB: 0.1,
       maxWidthOrHeight: 1080,
       useWebWorker: true
-
     }
-    console.log('hittt');
     /*
       The first parameter is the image we are compressing and the second parameter are the settings we chose for compressing the image
       The ref() parameter is what we are setting the path of the users profile picture in our firebase bucket
@@ -147,6 +154,7 @@ export function UserProvider({ children }) {
     logout,
     registerUser,
     addScoreToDb,
+    addAnonScoreToDb,
     uploadProfilePic,
     tookQuizNotLoggedIn,
     setTookQuizNotLoggedIn,
