@@ -4,6 +4,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import {useAuth} from '../states/userState';
 import successImg from '../images/success-image.svg';
+import Confetti from "../components/Confetti";
 
 const SuccessPage = () => {
   const {user, addScoreToDb, setTookQuizNotLoggedIn, tookQuizNotLoggedIn, notLoggedInTotal} = useAuth();
@@ -27,6 +28,7 @@ const SuccessPage = () => {
   }
   return (
       <div className='container'>
+        <Confetti/>
         <div className='success-hero'>
           <img
               src={successImg}
