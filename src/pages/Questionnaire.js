@@ -10,6 +10,9 @@ import firebase from 'firebase/app';
 import 'firebase/storage';
 import "firebase/database";
 
+let shuffled = false;
+let shuffledArr=[]
+
 const Questionnaire = () => {
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState({});
@@ -72,7 +75,23 @@ const Questionnaire = () => {
   let uniqueQuestions = [...questions.reduce((question, obj) => question.set(obj.ques, obj),
       new Map()).values()]
 
-  const htmlOfItems = uniqueQuestions.slice(0, 8).map((question, i) => {
+  const shuffle = (array) =>{
+    let i = array.length - 1;
+    for (; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+      shuffled = true
+    }
+    return array;
+  }
+
+  if (!shuffled) {
+    shuffledArr = shuffle(uniqueQuestions)
+  }
+
+  const htmlOfItems = shuffledArr.slice(0, 8).map((question, i) => {
     return (
         <Carousel.Item key={i}>
           <h2 className='question-title'>{question.ques}</h2>
