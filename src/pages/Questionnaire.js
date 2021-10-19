@@ -57,10 +57,9 @@ const Questionnaire = () => {
   }
   const handleSelect = (selectedIndex, e) => {
     if (e.target.classList.contains('next')) {
-      alert(score[selectedIndex]);
       if (score[7] > -1) {
         handleFinish();
-      } else if (score[selectedIndex] > -1) {
+      } else if (score[selectedIndex - 1] > -1) {
         setIndex(selectedIndex);
       } else {
         alert('You must select an answer!');
@@ -70,7 +69,10 @@ const Questionnaire = () => {
     }
   };
 
-  const htmlOfItems = questions.slice(0, 8).map((question, i) => {
+  let uniqueQuestions = [...questions.reduce((question, obj) => question.set(obj.ques, obj),
+      new Map()).values()]
+
+  const htmlOfItems = uniqueQuestions.slice(0, 8).map((question, i) => {
     return (
         <Carousel.Item key={i}>
           <h2 className='question-title'>{question.ques}</h2>
