@@ -53,7 +53,14 @@ const SuccessPage = () => {
               >
                 Sign Up
               </Link>
-              <p className='font-weight-bold success-login-text'>Already signed up? <a href='/questionnaire'>Log in to save your progress!</a></p>
+              <p className='font-weight-bold success-login-text'>Already signed up?
+                <Link
+                    to='/log-in'
+                    onClick={quizNotLoggedIn}
+                >
+                   Log in to save your progress!
+                </Link>
+              </p>
             </div>
         )}
         {user && <Link to='/profile' className='success-score-banner fancy-bg'>

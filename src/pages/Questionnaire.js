@@ -35,7 +35,6 @@ const Questionnaire = () => {
     for (const key in score) {
       total += score[key];
     }
-    alert(age);
     if (user){
       try {
         await addScoreToDb( user.uid, total, new Date());
@@ -119,7 +118,7 @@ const Questionnaire = () => {
             </div>
             <div className='col-lg-6 px-md-5 questionnaire-right'>
               <h2 className='questionnaire-step-counter'>
-                Question {index + 1} of 8;
+                Question {index + 1} of 8
               </h2>
               <Carousel
                   activeIndex={index}
