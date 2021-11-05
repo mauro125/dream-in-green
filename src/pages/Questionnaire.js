@@ -12,6 +12,7 @@ import "firebase/database";
 
 let shuffled = false;
 let shuffledArr=[]
+let categoryQuestions = []
 
 const Questionnaire = () => {
   const [index, setIndex] = useState(0);
@@ -88,6 +89,22 @@ const Questionnaire = () => {
 
   if (!shuffled) {
     shuffledArr = shuffle(uniqueQuestions)
+    let energyQuestions = shuffledArr.filter(question => question.category === 'energy');
+    let recyQuestions = shuffledArr.filter(question => question.category === 'recycling');
+    let waterQuestions = shuffledArr.filter(question => question.category === 'water');
+    let transpQuestions = shuffledArr.filter(question => question.category === 'transportation');
+    let purchQuestions = shuffledArr.filter(question => question.category === 'purchasing');
+
+    if(shuffled) {
+      for (let i = 0; i < 2; i++) {
+        categoryQuestions.push(energyQuestions[i])
+        categoryQuestions.push(recyQuestions[i])
+        categoryQuestions.push(waterQuestions[i])
+        categoryQuestions.push(transpQuestions[i])
+        categoryQuestions.push(purchQuestions[i])
+      }
+      shuffledArr = shuffle(categoryQuestions)
+    }
   }
 
   const htmlOfItems = shuffledArr.slice(0, 8).map((question, i) => {
