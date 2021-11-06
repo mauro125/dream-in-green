@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
 import Carousel from 'react-bootstrap/Carousel';
 import TipsContainer from '../components/TipsContainer';
 import Modal from '../components/Modal';
@@ -11,8 +10,8 @@ import 'firebase/storage';
 import "firebase/database";
 
 let shuffled = false;
-let shuffledArr=[]
-let categoryQuestions = []
+let shuffledArr=[];
+let categoryQuestions = [];
 
 const Questionnaire = () => {
   const [index, setIndex] = useState(0);
@@ -82,29 +81,26 @@ const Questionnaire = () => {
       const temp = array[i];
       array[i] = array[j];
       array[j] = temp;
-      shuffled = true
+      shuffled = true;
     }
     return array;
   }
 
-  if (!shuffled) {
-    shuffledArr = shuffle(uniqueQuestions)
-    let energyQuestions = shuffledArr.filter(question => question.category === 'energy');
-    let recyQuestions = shuffledArr.filter(question => question.category === 'recycling');
-    let waterQuestions = shuffledArr.filter(question => question.category === 'water');
-    let transpQuestions = shuffledArr.filter(question => question.category === 'transportation');
-    let purchQuestions = shuffledArr.filter(question => question.category === 'purchasing');
+  if (!shuffled && uniqueQuestions.length > 0) {
+    let energyQuestions = uniqueQuestions.filter(question => question.category === 'energy');
+    let recyQuestions = uniqueQuestions.filter(question => question.category === 'recycling');
+    let waterQuestions = uniqueQuestions.filter(question => question.category === 'water');
+    let transpQuestions = uniqueQuestions.filter(question => question.category === 'transportation');
+    let purchQuestions = uniqueQuestions.filter(question => question.category === 'purchasing');
 
-    if(shuffled) {
-      for (let i = 0; i < 2; i++) {
-        categoryQuestions.push(energyQuestions[i])
-        categoryQuestions.push(recyQuestions[i])
-        categoryQuestions.push(waterQuestions[i])
-        categoryQuestions.push(transpQuestions[i])
-        categoryQuestions.push(purchQuestions[i])
-      }
-      shuffledArr = shuffle(categoryQuestions)
+    for (let i = 0; i < 2; i++) {
+      categoryQuestions.push(energyQuestions[i]);
+      categoryQuestions.push(recyQuestions[i]);
+      categoryQuestions.push(waterQuestions[i]);
+      categoryQuestions.push(transpQuestions[i]);
+      categoryQuestions.push(purchQuestions[i]);
     }
+    shuffledArr = shuffle(categoryQuestions);
   }
 
   const htmlOfItems = shuffledArr.slice(0, 8).map((question, i) => {
@@ -122,7 +118,7 @@ const Questionnaire = () => {
         {(!user)? (
             <Modal isOpen={ showModal } toggle={ toggleModal } >
               <h1>Please enter your age:</h1>
-              <input type="number" onChange={ handleAgeChange } />
+              <input min={7} type="number" onChange={ handleAgeChange } />
               <button onClick={ toggleModal } className="btn btn-primary my-2 py-3 px-5" >
                 Submit
               </button>
