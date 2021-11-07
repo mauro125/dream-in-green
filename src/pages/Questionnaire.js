@@ -5,6 +5,7 @@ import TipsContainer from '../components/TipsContainer';
 import Modal from '../components/Modal';
 import { useAuth } from '../states/userState';
 import { buildAnswers } from '../utils';
+import {sortScore} from '../components/CategoryScoreSort';
 import firebase from 'firebase/app';
 import 'firebase/storage';
 import "firebase/database";
@@ -20,7 +21,17 @@ const Questionnaire = () => {
   let [showModal, setShowModal] = useState(true);
   let [age, setAge] = useState();
   let history = useHistory();
-  const { user, addScoreToDb, addAnonScoreToDb, setNotLoggedInTotal, notLoggedInTotal } = useAuth();
+  const {
+    user,
+    addScoreToDb,
+    addAnonScoreToDb,
+    setNotLoggedInTotal,
+    questionCategory,
+    setQuestionCategory,
+    categoryScores,
+    setCategoryScores
+  } = useAuth();
+
   //Grabs questions from firebase realtime database
   useEffect(() => {
     let database = firebase.database();
@@ -31,6 +42,7 @@ const Questionnaire = () => {
 
   const handleFinish = async () => {
     let total = 0;
+    let catScores = sortScore(questionCategory, score, setCategoryScores, categoryScores)
 
     for (const key in score) {
       total += score[key];
@@ -53,7 +65,7 @@ const Questionnaire = () => {
   };
 
   const toggleModal = () => setShowModal( !showModal );
- 
+
   const handleAgeChange = (e) => {
     setAge(parseInt(e.target.value));
   }
@@ -107,7 +119,7 @@ const Questionnaire = () => {
     return (
         <Carousel.Item key={i}>
           <h2 className='question-title'>{question.ques}</h2>
-          {buildAnswers(question, i, score, setScore)}
+          {buildAnswers(question, i, score, setScore, setQuestionCategory, questionCategory,setCategoryScores)}
         </Carousel.Item>
     );
   });
@@ -123,7 +135,7 @@ const Questionnaire = () => {
                 Submit
               </button>
             </Modal>) : ""}
-      
+
        <div className='container-fluid'>
           <div className='row questionnaire-row'>
             <div className='col-lg-6 questionnaire-left'>
