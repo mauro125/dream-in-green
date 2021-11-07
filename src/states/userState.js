@@ -32,6 +32,9 @@ export function UserProvider({ children }) {
   //quiz total score for user that is not logged in
   const [notLoggedInTotal, setNotLoggedInTotal] = useState(0);
 
+  //state used to store each question category
+  const [questionCategory, setQuestionCategory] = useState();
+  const [categoryScores, setCategoryScores] = useState({});
   //sign up through firebase api
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -62,19 +65,19 @@ export function UserProvider({ children }) {
       average: 100
     });
   }
-  
+
   function addAnonScoreToDb(age, score){
     anonCollection.doc().set({
       age: parseInt(age),
       score: score,
       createdAt: new Date()
     })
-    .then(function () {
-      console.log('Document successfully written!');
-    })
-    .catch(function (error) {
-      console.error('Error writing document: ', error);
-    });
+        .then(function () {
+          console.log('Document successfully written!');
+        })
+        .catch(function (error) {
+          console.error('Error writing document: ', error);
+        });
   }
 
   const [profilePic, setProfilePic] = useState(defaultProfileImage);
@@ -159,7 +162,11 @@ export function UserProvider({ children }) {
     tookQuizNotLoggedIn,
     setTookQuizNotLoggedIn,
     notLoggedInTotal,
-    setNotLoggedInTotal
+    setNotLoggedInTotal,
+    questionCategory,
+    setQuestionCategory,
+    categoryScores,
+    setCategoryScores
   };
 
   return (
