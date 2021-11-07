@@ -49,13 +49,13 @@ const Questionnaire = () => {
     }
     if (user){
       try {
-        await addScoreToDb( user.uid, total, new Date());
+        await addScoreToDb( user.uid, total, new Date(), catScores);
       } catch (e) {
         console.log(e);
       }
     } else{
       try {
-        await addAnonScoreToDb( age, total);
+        await addAnonScoreToDb( age, total, catScores);
       } catch (e) {
         console.log(e);
       }

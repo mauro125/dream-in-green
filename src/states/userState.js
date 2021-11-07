@@ -56,21 +56,23 @@ export function UserProvider({ children }) {
         });
   }
 
-  function addScoreToDb(uid, score, createdAt) {
+  function addScoreToDb(uid, score, createdAt, catScores) {
     usersCollection.doc(uid).update({
       scores: firebase.firestore.FieldValue.arrayUnion({
         score,
         createdAt,
       }),
-      average: 100
+      average: 100,
+      catScores
     });
   }
 
-  function addAnonScoreToDb(age, score){
+  function addAnonScoreToDb(age, score, catScores){
     anonCollection.doc().set({
       age: parseInt(age),
       score: score,
-      createdAt: new Date()
+      createdAt: new Date(),
+      catScores
     })
         .then(function () {
           console.log('Document successfully written!');
