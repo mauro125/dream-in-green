@@ -1,14 +1,19 @@
 import React from 'react';
 import Slider from 'rc-slider';
 
-export const buildAnswers = (question, questionIndex, score, setScore) => {
-  const { ans, type } = question;
+export const buildAnswers = (question, questionIndex, score, setScore, setQuestionCategory, questionCategory) => {
+    const { ans, type, category } = question;
+
   if (type === 'multipleChoice') {
     return ans.map((answer, i) => {
       return (
         <button
           key={i}
-          onClick={() => setScore({ ...score, [questionIndex]: answer.value })}
+          onClick={() => {
+            setScore({...score, [questionIndex]: answer.value});
+            setQuestionCategory({...questionCategory, [questionIndex]:category})
+            }
+          }
           className={`multipleChoice-btn ${
             score[questionIndex] === answer.value ? 'active' : ''
           }`}
@@ -28,7 +33,6 @@ export const buildAnswers = (question, questionIndex, score, setScore) => {
           min={0}
           max={10}
           onChange={(e) => setScore({ ...score, [questionIndex]: e })}
-          
         />
       </div>
     );
