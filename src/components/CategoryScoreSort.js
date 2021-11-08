@@ -1,11 +1,11 @@
-export const sortScore = (questionCategory, score, setCategoryScores) => {
+export const sortScore = (questionCategory, score, setCategoryScores, categoryScores) => {
     let sortedCatScores;
     let i = 0;
-    let transScore = 0;
-    let waterScore = 0;
-    let energyScore = 0;
-    let recycScore = 0;
-    let purchScore = 0;
+    let transScore = categoryScores.transScore;
+    let waterScore = categoryScores.waterScore;
+    let energyScore = categoryScores.energyScore;
+    let recycScore = categoryScores.recycScore;
+    let purchScore = categoryScores.purchScore;
     for (; i < 8; i++) {
         if (questionCategory[i] === "transportation") {
             transScore += score[i]
