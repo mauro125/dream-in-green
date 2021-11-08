@@ -149,6 +149,24 @@ export function UserProvider({ children }) {
     return auth.signOut();
   }
 
+  const getCatScores = () =>{
+    let catScores = { recycScore:0,transScore:0, waterScore:0, purchScore:0, energyScore:0 }
+    if(user) {
+      usersCollection.doc(user.uid).get().then(function (doc) {
+        if (doc.data().catScores) {
+          let catScores = doc.data().catScores;
+          setCategoryScores(catScores)
+        } else {
+          //if user is logged in and for some reason doesn't have category score in firestore, we initalize to zero
+          setCategoryScores(catScores)
+        }
+      })
+    } else {
+      // anon submission, initialize category scores to zero
+      setCategoryScores(catScores)
+    }
+  }
+
   //useContext state to keep track of, where we also store useful functions and the user
   const defaultValue = {
     user,
@@ -168,7 +186,8 @@ export function UserProvider({ children }) {
     questionCategory,
     setQuestionCategory,
     categoryScores,
-    setCategoryScores
+    setCategoryScores,
+    getCatScores
   };
 
   return (

@@ -8,7 +8,7 @@ import nicknames from '../assets/nicknames';
 import LineGraph from '../components/myLineGraph'
 
 const Profile = () => {
-  const { logout, user, usersCollection, profilePic, uploadProfilePic } = useAuth();
+  const { logout, user, usersCollection, profilePic, uploadProfilePic, getCatScores } = useAuth();
   const redirect = useHistory();
 
   const [name, setName] = useState('');
@@ -58,6 +58,7 @@ const Profile = () => {
           setScores(undefined);
           setLast('N/A');
         }
+        getCatScores()
 
 
         setName(doc.data().firstName + ' ' + doc.data().lastName);

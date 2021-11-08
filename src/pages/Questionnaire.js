@@ -29,11 +29,13 @@ const Questionnaire = () => {
     questionCategory,
     setQuestionCategory,
     categoryScores,
-    setCategoryScores
+    setCategoryScores,
+    getCatScores
   } = useAuth();
 
   //Grabs questions from firebase realtime database
   useEffect(() => {
+    getCatScores()
     let database = firebase.database();
     database.ref().on('value', (snapshot) => {
       setQuestions(snapshot.val());
