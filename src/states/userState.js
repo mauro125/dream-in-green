@@ -32,6 +32,9 @@ export function UserProvider({ children }) {
   //quiz total score for user that is not logged in
   const [notLoggedInTotal, setNotLoggedInTotal] = useState(0);
 
+  //state used to store each question category
+  const [questionCategory, setQuestionCategory] = useState();
+  const [categoryScores, setCategoryScores] = useState({});
   //sign up through firebase api
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -53,28 +56,30 @@ export function UserProvider({ children }) {
         });
   }
 
-  function addScoreToDb(uid, score, createdAt) {
+  function addScoreToDb(uid, score, createdAt, catScores) {
     usersCollection.doc(uid).update({
       scores: firebase.firestore.FieldValue.arrayUnion({
         score,
         createdAt,
       }),
-      average: 100
+      average: 100,
+      catScores
     });
   }
-  
-  function addAnonScoreToDb(age, score){
+
+  function addAnonScoreToDb(age, score, catScores){
     anonCollection.doc().set({
       age: parseInt(age),
       score: score,
-      createdAt: new Date()
+      createdAt: new Date(),
+      catScores
     })
-    .then(function () {
-      console.log('Document successfully written!');
-    })
-    .catch(function (error) {
-      console.error('Error writing document: ', error);
-    });
+        .then(function () {
+          console.log('Document successfully written!');
+        })
+        .catch(function (error) {
+          console.error('Error writing document: ', error);
+        });
   }
 
   const [profilePic, setProfilePic] = useState(defaultProfileImage);
@@ -144,6 +149,24 @@ export function UserProvider({ children }) {
     return auth.signOut();
   }
 
+  const getCatScores = () =>{
+    let catScores = { recycScore:0,transScore:0, waterScore:0, purchScore:0, energyScore:0 }
+    if(user) {
+      usersCollection.doc(user.uid).get().then(function (doc) {
+        if (doc.data().catScores) {
+          let catScores = doc.data().catScores;
+          setCategoryScores(catScores)
+        } else {
+          //if user is logged in and for some reason doesn't have category score in firestore, we initalize to zero
+          setCategoryScores(catScores)
+        }
+      })
+    } else {
+      // anon submission, initialize category scores to zero
+      setCategoryScores(catScores)
+    }
+  }
+
   //useContext state to keep track of, where we also store useful functions and the user
   const defaultValue = {
     user,
@@ -159,7 +182,12 @@ export function UserProvider({ children }) {
     tookQuizNotLoggedIn,
     setTookQuizNotLoggedIn,
     notLoggedInTotal,
-    setNotLoggedInTotal
+    setNotLoggedInTotal,
+    questionCategory,
+    setQuestionCategory,
+    categoryScores,
+    setCategoryScores,
+    getCatScores
   };
 
   return (

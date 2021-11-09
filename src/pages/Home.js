@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import InformationRow from '../components/InformationRow';
 import ContactUsForm from '../components/ContactUsForm';
@@ -7,7 +7,10 @@ import homeImgFir from '../images/girl-earth.svg';
 import {useAuth} from "../states/userState";
 
 const Home = () => {
-  const {user} = useAuth();
+  const {user,getCatScores} = useAuth();
+  useEffect(() => {
+    getCatScores()
+  },[])
   return (
       <div>
         <div className='container'>
