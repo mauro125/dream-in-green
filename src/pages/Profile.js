@@ -1,15 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, {useState, useEffect, useRef} from 'react';
+import {Link, useHistory} from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
-import { useAuth } from '../states/userState';
+import {useAuth} from '../states/userState';
 import nicknames from '../assets/nicknames';
 import LineGraph from '../components/myLineGraph'
 import HorizontalBarChart from "../components/BarGraph";
+import DoughnutChart from "../components/DougnutChart";
 
 const Profile = () => {
-  const {logout, user, usersCollection, profilePic, uploadProfilePic, getCatScores, categoryScores,hasCatScore} = useAuth();
+  const {
+    logout,
+    user,
+    usersCollection,
+    profilePic,
+    uploadProfilePic,
+    getCatScores,
+    categoryScores,
+    hasCatScore
+  } = useAuth();
   const redirect = useHistory();
 
   const [name, setName] = useState('');
@@ -21,6 +31,7 @@ const Profile = () => {
   const [data, setData] = useState([]);
   const [toggleBarGraph, setToggleBarGraph] = useState(false);
   const [toggleLineGraph, setToggleLineGraph] = useState(true);
+  const [togglePieChart, setTogglePieChart] = useState(false);
   const fileUpload = useRef(null);
 
   function handleLogOut() {
@@ -93,11 +104,19 @@ const Profile = () => {
   const handleBarGraphToggle = () => {
     setToggleBarGraph(true)
     setToggleLineGraph(false)
+    setTogglePieChart(false)
   }
 
   const handleLineGraphToggle = () => {
-    setToggleBarGraph(false)
     setToggleLineGraph(true)
+    setToggleBarGraph(false)
+    setTogglePieChart(false)
+  }
+
+  const handlePieChartToggle = () => {
+    setTogglePieChart(true)
+    setToggleBarGraph(false)
+    setToggleLineGraph(false)
   }
 
 
@@ -139,6 +158,7 @@ const Profile = () => {
         <div className='col m-3 profile-user-col'>
           <Card className='profile-card' border='primary'>
             <div className='profile-imagecontainer'>
+              <br/>
               <Image
                 className='profile-image'
                 src={profilePic}
@@ -190,12 +210,14 @@ const Profile = () => {
                 Take Survey
               </Link>
             </div>
+            <br/>
           </Card>
         </div>
 
         <div className='col m-3 profile-table-col'>
           <div className='h3-align'>
             <h3 className='text-primary'>Charts</h3>
+            <br/>
             <button
               type='button'
               className='btn btn-primary py-1 px-3 mb-2'
@@ -211,18 +233,42 @@ const Profile = () => {
             >
               Category Scores
             </button>
+            <div className="divider"/>
+            <button
+              type='button'
+              className='btn btn-primary py-1 px-3 mb-2'
+              onClick={handlePieChartToggle}
+            >
+              Pie Chart
+            </button>
             <br/>
             <br/>
           </div>
           {toggleLineGraph && <LineGraph data={data}/>}
           <br/>
-          {toggleBarGraph && hasCatScore && <HorizontalBarChart catScores={categoryScores}/>}
-
+          {toggleBarGraph && (<Card className='profile-card' border='primary'>
+            <br/>
+            {toggleBarGraph && hasCatScore && <HorizontalBarChart catScores={categoryScores}/>}
           {toggleBarGraph && !hasCatScore && <h3 className=' h3-align'>Take a survey to get more details on how you are doing!</h3>}
+            <br/>
+          </Card>)}
+
+          {togglePieChart && (<Card className='profile-card' border='primary'>
+            <br/>
+            {togglePieChart && hasCatScore && <DoughnutChart catScores={categoryScores}/>}
+
+            {togglePieChart && !hasCatScore &&
+            (<div>
+              {/*<br/>*/}
+              <h3 className=' h3-align'>Take a survey to get more details on how you are doing!</h3>
+            </div>)}
+            <br/>
+          </Card>)}
           <br/>
           <br/>
           {/*<br/>*/}
           <Card className='profile-card' border='primary'>
+            <br/>
             <h3 className='mb-0 text-primary'>Survey History</h3>
             {scores && (
               <Table striped borderless hover className='mb-0'>
@@ -237,6 +283,7 @@ const Profile = () => {
               </Table>
             )}
             {scores === undefined && <h1>No scores</h1>}
+            <br/>
           </Card>
           <br/>
           <br/>
