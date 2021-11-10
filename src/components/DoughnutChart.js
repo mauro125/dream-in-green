@@ -2,6 +2,7 @@ import React from 'react';
 import {Doughnut} from 'react-chartjs-2';
 
 const DoughnutChart = (props) => {
+
   let labels = [];
   let scores = [];
   for (let [key, value] of Object.entries(props.catScores)) {

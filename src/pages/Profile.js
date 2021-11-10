@@ -7,7 +7,7 @@ import {useAuth} from '../states/userState';
 import nicknames from '../assets/nicknames';
 import LineGraph from '../components/myLineGraph'
 import HorizontalBarChart from "../components/BarGraph";
-import DoughnutChart from "../components/DougnutChart";
+import DoughnutChart from "../components/DoughnutChart";
 
 const Profile = () => {
   const {
