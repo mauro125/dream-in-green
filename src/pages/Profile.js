@@ -18,11 +18,11 @@ const Profile = () => {
     uploadProfilePic,
     getCatScores,
     categoryScores,
-    hasCatScore
+    hasCatScore,
+    name,
   } = useAuth();
   const redirect = useHistory();
 
-  const [name, setName] = useState('');
   const [school, setSchool] = useState('');
   const [last, setLast] = useState('');
   const [avg, setAvg] = useState(0);
@@ -74,9 +74,6 @@ const Profile = () => {
           setLast('N/A');
         }
         getCatScores()
-
-
-        setName(doc.data().firstName + ' ' + doc.data().lastName);
         setSchool(doc.data().school);
       });
   }, []);
@@ -213,7 +210,6 @@ const Profile = () => {
             <br/>
           </Card>
         </div>
-
         <div className='col m-3 profile-table-col'>
           <div className='h3-align'>
             <h3 className='text-primary'>Charts</h3>
@@ -239,7 +235,7 @@ const Profile = () => {
               className='btn btn-primary py-1 px-3 mb-2'
               onClick={handlePieChartToggle}
             >
-              Pie Chart
+              Doughnut Chart
             </button>
             <br/>
             <br/>

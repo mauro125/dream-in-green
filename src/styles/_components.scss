@@ -216,7 +216,7 @@
 
 .profile-card {
   align-items: center;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 .h3-align {
@@ -229,13 +229,25 @@
   display:inline-block;
 }
 
+.divider-image{
+  width:15px;
+  height:auto;
+  display:inline-block;
+}
+
 .profile-image {
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
   object-fit: cover;
   overflow: hidden;
 }
 
+.button-image {
+  height: 35px;
+  width: 35px;
+  object-fit: cover;
+  overflow: hidden;
+}
 
 .profile-card-text {
   border-top: 1px solid theme-color('primary');

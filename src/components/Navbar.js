@@ -5,13 +5,13 @@ import Nav from 'react-bootstrap/Nav';
 import { useAuth } from '../states/userState';
 
 import logoImg from '../images/dig-logo.png';
+import Image from "react-bootstrap/Image";
 
 const NavBar = () => {
   const [activeKey, setActiveKey] = useState(-1);
-
   const location = useLocation();
 
-  const { user } = useAuth();
+  const { user, profilePic, name} = useAuth();
 
   //the home page contact form picture col needs to be set col-lg-6 so that it wraps correctly
   useEffect(() => {
@@ -59,9 +59,14 @@ const NavBar = () => {
           </Nav>
           <Link
             to='/questionnaire'
-            className='btn btn-primary my-2 my-lg-0 py-3 px-5'
-          >
-            {user ? 'Get Started' : 'Log In'}
+            className={`btn btn-primary my-2 my-lg-0 ${user ?'py-2 px-3':'py-3 px-5'}`}
+          >{user && <Image
+            className='button-image'
+            src={profilePic}
+            roundedCircle
+          />}
+            <div className="divider-image"/>
+            {user ? `${name}` : 'Log In'}
           </Link>
         </Navbar.Collapse>
       </div>

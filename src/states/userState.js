@@ -35,8 +35,8 @@ export function UserProvider({ children }) {
   //state used to store each question category
   const [questionCategory, setQuestionCategory] = useState();
   const [categoryScores, setCategoryScores] = useState({});
-
   const [hasCatScore, setHasCatScore] = useState();
+  const [name, setName] = useState('');
   //sign up through firebase api
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -121,12 +121,22 @@ export function UserProvider({ children }) {
   const downloadProfilePic = (user) => {
     firebase.storage().ref('users/'+ user.uid + '/profile.jpg').getDownloadURL()
         .then(imgURL => {
-          console.log("successfully downloaded profile picture");
           setProfilePic(imgURL);
         }).catch(error => {
       console.log('error img ' + error);
       setProfilePic(defaultProfileImage);
     })
+
+    usersCollection
+      .doc(user.uid)
+      .get()
+      .then(function (doc) {
+        let fName = doc.data().firstName
+        let lName = doc.data().lastName
+        fName = fName.charAt(0).toUpperCase() + fName.slice(1);
+        lName = lName.charAt(0).toUpperCase() + lName.slice(1);
+        setName(fName + ' ' + lName);
+      })
   }
 
   /* firebase api has its own listener for when the user has signed in or not
@@ -192,7 +202,9 @@ export function UserProvider({ children }) {
     categoryScores,
     setCategoryScores,
     getCatScores,
-    hasCatScore
+    hasCatScore,
+    name,
+    setName
   };
 
   return (
