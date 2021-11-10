@@ -35,6 +35,8 @@ export function UserProvider({ children }) {
   //state used to store each question category
   const [questionCategory, setQuestionCategory] = useState();
   const [categoryScores, setCategoryScores] = useState({});
+
+  const [hasCatScore, setHasCatScore] = useState();
   //sign up through firebase api
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -156,9 +158,11 @@ export function UserProvider({ children }) {
         if (doc.data().catScores) {
           let catScores = doc.data().catScores;
           setCategoryScores(catScores)
+          setHasCatScore(true);
         } else {
           //if user is logged in and for some reason doesn't have category score in firestore, we initalize to zero
           setCategoryScores(catScores)
+          setHasCatScore(false);
         }
       })
     } else {
@@ -187,7 +191,8 @@ export function UserProvider({ children }) {
     setQuestionCategory,
     categoryScores,
     setCategoryScores,
-    getCatScores
+    getCatScores,
+    hasCatScore
   };
 
   return (

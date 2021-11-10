@@ -9,7 +9,7 @@ import LineGraph from '../components/myLineGraph'
 import HorizontalBarChart from "../components/BarGraph";
 
 const Profile = () => {
-  const {logout, user, usersCollection, profilePic, uploadProfilePic, getCatScores, categoryScores} = useAuth();
+  const {logout, user, usersCollection, profilePic, uploadProfilePic, getCatScores, categoryScores,hasCatScore} = useAuth();
   const redirect = useHistory();
 
   const [name, setName] = useState('');
@@ -19,8 +19,8 @@ const Profile = () => {
   const [scores, setScores] = useState(null);
   const [cuteName, setCuteName] = useState('');
   const [data, setData] = useState([]);
-  const [toggleBarGraph, setToggleBarGraph] = useState(true);
-  const [toggleLineGraph, setToggleLineGraph] = useState(false);
+  const [toggleBarGraph, setToggleBarGraph] = useState(false);
+  const [toggleLineGraph, setToggleLineGraph] = useState(true);
   const fileUpload = useRef(null);
 
   function handleLogOut() {
@@ -194,6 +194,34 @@ const Profile = () => {
         </div>
 
         <div className='col m-3 profile-table-col'>
+          <div className='h3-align'>
+            <h3 className='text-primary'>Charts</h3>
+            <button
+              type='button'
+              className='btn btn-primary py-1 px-3 mb-2'
+              onClick={handleLineGraphToggle}
+            >
+              Line Chart
+            </button>
+            <div className="divider"/>
+            <button
+              type='button'
+              className='btn btn-primary py-1 px-3 mb-2'
+              onClick={handleBarGraphToggle}
+            >
+              Category Scores
+            </button>
+            <br/>
+            <br/>
+          </div>
+          {toggleLineGraph && <LineGraph data={data}/>}
+          <br/>
+          {toggleBarGraph && hasCatScore && <HorizontalBarChart catScores={categoryScores}/>}
+
+          {toggleBarGraph && !hasCatScore && <h3 className=' h3-align'>Take a survey to get more details on how you are doing!</h3>}
+          <br/>
+          <br/>
+          {/*<br/>*/}
           <Card className='profile-card' border='primary'>
             <h3 className='mb-0 text-primary'>Survey History</h3>
             {scores && (
@@ -212,29 +240,6 @@ const Profile = () => {
           </Card>
           <br/>
           <br/>
-          <br/>
-          <div className='h3-align'>
-            <h3 className='text-primary'>Charts</h3>
-            <br/>
-            <button
-              type='button'
-              className='btn btn-primary py-1 px-3 mb-2'
-              onClick={handleLineGraphToggle}
-            >
-              Line Chart
-            </button>
-            <div className="divider"/>
-            <button
-              type='button'
-              className='btn btn-primary py-1 px-3 mb-2'
-              onClick={handleBarGraphToggle}
-            >
-              Category Scores
-            </button>
-          </div>
-          {toggleLineGraph && <LineGraph data={data}/>}
-          <br/>
-          {toggleBarGraph && <HorizontalBarChart catScores={categoryScores}/>}
           <br/>
         </div>
       </div>
