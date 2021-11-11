@@ -212,36 +212,42 @@ const Profile = () => {
         </div>
         <div className='col m-3 profile-table-col'>
           <div className='h3-align'>
-            <h3 className='text-primary'>Charts</h3>
+            {hasCatScore && scores !== undefined && <h3 className='text-primary'>Charts</h3>}
             <br/>
-            <button
+            {scores !== undefined && (<button
               type='button'
               className='btn btn-primary py-1 px-3 mb-2'
               onClick={handleLineGraphToggle}
             >
               Line Chart
-            </button>
+            </button>)}
             <div className="divider"/>
-            <button
+            {hasCatScore && <button
               type='button'
               className='btn btn-primary py-1 px-3 mb-2'
               onClick={handleBarGraphToggle}
             >
               Category Scores
-            </button>
+            </button>}
             <div className="divider"/>
-            <button
+            {hasCatScore &&<button
               type='button'
               className='btn btn-primary py-1 px-3 mb-2'
               onClick={handlePieChartToggle}
             >
               Doughnut Chart
-            </button>
+            </button>}
             <br/>
             <br/>
           </div>
-          {toggleLineGraph && <LineGraph data={data}/>}
+          {toggleLineGraph && scores !== undefined && <LineGraph data={data}/>}
           <br/>
+          {toggleLineGraph && scores === undefined && (<Card className='profile-card' border='primary'>
+            <br/>
+            <h3 className=' h3-align'>Take a survey to get more details on how you are doing!</h3>
+            <br/>
+          </Card>)}
+
           {toggleBarGraph && (<Card className='profile-card' border='primary'>
             <br/>
             {toggleBarGraph && hasCatScore && <HorizontalBarChart catScores={categoryScores}/>}
