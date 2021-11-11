@@ -137,6 +137,13 @@
   }
 }
 
+.dropdown-menu {
+  width: 100%;
+}
+#hovering:hover {
+  background-color: rgba(104, 191, 142, 0.4);
+}
+
 .contact-form input,
 .contact-form .row,
 .contact-form .form-group {

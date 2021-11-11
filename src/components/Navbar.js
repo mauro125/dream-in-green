@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import {Link, useHistory, useLocation} from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { useAuth } from '../states/userState';
 
 import logoImg from '../images/dig-logo.png';
 import Image from "react-bootstrap/Image";
+import {Dropdown} from "react-bootstrap";
 
 const NavBar = () => {
   const [activeKey, setActiveKey] = useState(-1);
   const location = useLocation();
 
-  const { user, profilePic, name} = useAuth();
+  const {user, profilePic, name, logout} = useAuth();
+  const redirect = useHistory();
 
   //the home page contact form picture col needs to be set col-lg-6 so that it wraps correctly
   useEffect(() => {
@@ -28,6 +30,11 @@ const NavBar = () => {
     }
   }, [location]);
 
+  function handleLogOut() {
+    logout();
+    redirect.push('/');
+  }
+
   return (
     <Navbar expand='lg' sticky='top'>
       <div className='container'>
@@ -38,7 +45,7 @@ const NavBar = () => {
             alt='Dream In Green logo'
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls='nav-bar-component' />
+        <Navbar.Toggle aria-controls='nav-bar-component'/>
         <Navbar.Collapse id='nav-bar-component'>
           <Nav
             className='mr-auto ml-auto'
@@ -57,17 +64,41 @@ const NavBar = () => {
               </Nav.Link>
             )}
           </Nav>
-          <Link
-            to='/questionnaire'
-            className={`btn btn-primary my-2 my-lg-0 ${user ?'py-2 px-3':'py-3 px-5'}`}
-          >{user && <Image
-            className='button-image'
-            src={profilePic}
-            roundedCircle
-          />}
-            <div className="divider-image"/>
-            {user ? `${name}` : 'Log In'}
-          </Link>
+          {!user && !location.pathname.startsWith('/log-in') &&
+          (<div>
+            <Link
+              to='/log-in'
+              className={"btn btn-primary my-2 my-lg-0 py-2 px-5"}
+            >
+              Log In
+            </Link>
+
+          </div>)
+          }
+          <div className="divider-image"/>
+          {!user && !location.pathname.startsWith('/sign-up') && (<Link
+            to='/sign-up'
+            className={"btn btn-primary my-2 my-lg-0 py-2 px-5"}
+          >
+            Create Account
+          </Link>)}
+          {user && (<Dropdown>
+            <Dropdown.Toggle className={'btn btn-primary my-2 my-lg-0 py-2 px-3'}>
+              <Image
+                className='button-image'
+                src={profilePic}
+                roundedCircle
+              />
+              <div className="divider-image"/>
+              {name}
+            </Dropdown.Toggle>
+            <Dropdown.Menu className={'dropdown-menu'}>
+              <Dropdown.Item id='hovering' as={Link} to='/'>Home</Dropdown.Item>
+              <Dropdown.Item id='hovering' href="#/action-2">Another action</Dropdown.Item>
+              <Dropdown.Divider/>
+              <Dropdown.Item id='hovering' onClick={handleLogOut}>Logout</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>)}
         </Navbar.Collapse>
       </div>
     </Navbar>
