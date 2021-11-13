@@ -37,6 +37,9 @@ export function UserProvider({ children }) {
   const [categoryScores, setCategoryScores] = useState({});
   const [hasCatScore, setHasCatScore] = useState();
   const [name, setName] = useState('');
+  const [scores, setScores] = useState(null);
+  const [currentCatScores, setCurrentCatScores] = useState({});
+  const [stringDate, setStringDate] = useState([]);
   //sign up through firebase api
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -58,11 +61,14 @@ export function UserProvider({ children }) {
         });
   }
 
-  function addScoreToDb(uid, score, createdAt, catScores) {
+  //catScores= old scores plus new scores
+  //currentQuizCatScore = only new scores no old scores added
+  function addScoreToDb(uid, score, createdAt, catScores, currentQuizCatScore) {
     usersCollection.doc(uid).update({
       scores: firebase.firestore.FieldValue.arrayUnion({
         score,
         createdAt,
+        currentQuizCatScore
       }),
       average: 100,
       catScores
@@ -166,12 +172,21 @@ export function UserProvider({ children }) {
     if(user) {
       usersCollection.doc(user.uid).get().then(function (doc) {
         if (doc.data().catScores) {
+          if(doc.data().scores){
+            let arr = doc.data().scores;
+            setCurrentCatScores(arr)
+          }
           let catScores = doc.data().catScores;
           setCategoryScores(catScores)
+          //boolean to check if catScore is empty or not, if not empty able to display graphs/buttons
+          //in profile page
           setHasCatScore(true);
         } else {
           //if user is logged in and for some reason doesn't have category score in firestore, we initalize to zero
           setCategoryScores(catScores)
+          setCurrentCatScores(catScores)
+          //boolean to check to see if catScore is empty, if empty display message and don't display graphs/buttons
+          // in profile page
           setHasCatScore(false);
         }
       })
@@ -204,7 +219,13 @@ export function UserProvider({ children }) {
     getCatScores,
     hasCatScore,
     name,
-    setName
+    setName,
+    scores,
+    setScores,
+    stringDate,
+    setStringDate,
+    currentCatScores,
+    setCurrentCatScores
   };
 
   return (

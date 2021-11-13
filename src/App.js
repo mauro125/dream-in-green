@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import { UserProvider } from './states/userState';
 import AuthRoute from './components/AuthRoute';
 import Questionnaire from './pages/Questionnaire';
+import DetailStatPage from "./pages/DetailStatPage";
 
 
 const NoMatchPage = () => {
@@ -52,7 +53,8 @@ const App = () => {
             <Route path='/success/:score'>
               <SuccessPage />
             </Route>
-            <AuthRoute path='/profile' component={Profile} />
+            <AuthRoute path='/profile' exact component={Profile} />
+            <AuthRoute path='/profile/:date' component={DetailStatPage} />
             <Route component={NoMatchPage} />
           </Switch>
           <Footer />

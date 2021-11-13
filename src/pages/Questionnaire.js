@@ -30,7 +30,9 @@ const Questionnaire = () => {
     setQuestionCategory,
     categoryScores,
     setCategoryScores,
-    getCatScores
+    getCatScores,
+    currentCatScores,
+    setCurrentCatScores
   } = useAuth();
 
   //Grabs questions from firebase realtime database
@@ -44,20 +46,22 @@ const Questionnaire = () => {
 
   const handleFinish = async () => {
     let total = 0;
-    let catScores = sortScore(questionCategory, score, setCategoryScores, categoryScores)
+    let catScores = sortScore(questionCategory, score, setCategoryScores, categoryScores, setCurrentCatScores)
 
     for (const key in score) {
       total += score[key];
     }
     if (user){
       try {
-        await addScoreToDb( user.uid, total, new Date(), catScores);
+        //catScores.sortedCatScores = old scores plus new scores
+        //catScores.currentCatScores = only new scores no old scores added
+        await addScoreToDb( user.uid, total, new Date(), catScores.sortedCatScores, catScores.currentCatScores );
       } catch (e) {
         console.log(e);
       }
     } else{
       try {
-        await addAnonScoreToDb( age, total, catScores);
+        await addAnonScoreToDb( age, total, catScores.sortedCatScores );
       } catch (e) {
         console.log(e);
       }
@@ -125,6 +129,7 @@ const Questionnaire = () => {
         </Carousel.Item>
     );
   });
+
 
   return (
       <div>
