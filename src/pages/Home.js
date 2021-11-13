@@ -9,9 +9,10 @@ import {useAuth} from "../states/userState";
 const Home = () => {
   const {user} = useAuth();
   return (
-      <div>
+    <div>
+      <div className='background-color1'>
         <div className='container'>
-          <div className='row mt-5 hero-row-reverse-mobile home-row '>
+          <div className='row mt-5 hero-row-reverse-mobile home-row jumbotron'>
             <div className='col-lg-6 text-center txt-md-left'>
               <div className='row mb-3'>
                 <h1 className='display-4 font-weight-bold'>
@@ -52,12 +53,17 @@ const Home = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div>
+        <div className='container '>
           <InformationRow />
           <div>
             <ContactUsForm />
           </div>
         </div>
       </div>
+    </div>
   );
 };
 
