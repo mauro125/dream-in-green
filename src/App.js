@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 import { UserProvider } from './states/userState';
 import AuthRoute from './components/AuthRoute';
 import Questionnaire from './pages/Questionnaire';
-import DetailStatPage from "./components/DetailStatPage";
+import DetailStatPage from "./pages/DetailStatPage";
 
 const NoMatchPage = () => {
   return (

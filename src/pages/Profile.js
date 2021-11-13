@@ -9,6 +9,7 @@ import LineGraph from '../components/myLineGraph'
 import HorizontalBarChart from "../components/BarGraph";
 import DoughnutChart from "../components/DoughnutChart";
 import ProgressBar from "@ramonak/react-progress-bar";
+import Modal from "../components/Modal";
 
 const Profile = () => {
   const {
@@ -23,7 +24,8 @@ const Profile = () => {
     name,
     scores,
     setScores,
-    setStringDate
+    setStringDate,
+    currentCatScores
   } = useAuth();
   const redirect = useHistory();
 
@@ -36,6 +38,7 @@ const Profile = () => {
   const [toggleLineGraph, setToggleLineGraph] = useState(true);
   const [togglePieChart, setTogglePieChart] = useState(false);
   const fileUpload = useRef(null);
+  const [showModal, setShowModal] = useState(false);
 
   let newArr = []
 
@@ -132,8 +135,13 @@ const Profile = () => {
   }
 
   const passDate = (month, day, year) => {
-    let date = month + '-' + day + '-' + year;
-    redirect.push('/profile/' + date);
+    setShowModal(true)
+    let date = month + day  + year;
+    console.log(currentCatScores)
+    let arr = [];
+    arr = currentCatScores.map(item => item.createdAt === (month+day+year))
+    console.log(arr)
+    // redirect.push('/profile/' + date);
   }
 
   const month = [
@@ -168,7 +176,10 @@ const Profile = () => {
             <td>
               <button
                 className='btn btn-primary'
-                onClick={() => passDate(month[score.createdAt.toDate().getMonth()], score.createdAt.toDate().getDate(), score.createdAt.toDate().getFullYear())}>
+                onClick={() => {
+                  // passDate(month[score.createdAt.toDate().getMonth()], score.createdAt.toDate().getDate(), score.createdAt.toDate().getFullYear());
+                  passDate(month[score.createdAt], score.createdAt, score.createdAt);
+                }}>
                 Detailed Info
               </button>
             </td>
@@ -176,10 +187,18 @@ const Profile = () => {
         );
       })
       : '';
-
+  const toggleModal = () => setShowModal( !showModal );
   return (
     <div className='container mw-100'>
       <div className='row profile-container'>
+        {(showModal)&& (
+          <Modal isOpen={ showModal } toggle={ toggleModal } >
+            <h1>Detailed Info</h1>
+
+            <button onClick={ toggleModal } className="btn btn-primary my-2 py-3 px-5" >
+              Close
+            </button>
+          </Modal>)}
         <div className='col m-3 profile-user-col'>
           <Card className='profile-card' border='primary'>
             <div className='profile-imagecontainer'>
@@ -321,27 +340,6 @@ const Profile = () => {
           <br/>
         </div>
         <div className='col m-3 profile-user-col'>
-          {/*<Card className='right-column' border='primary'>*/}
-          {/*  <div className="box">Energy</div>*/}
-          {/*  <div className="box ">*/}
-          {/*    <ProgressBar*/}
-          {/*      // completed="20"*/}
-          {/*      completed={`${categoryScores.energyScore}`}*/}
-          {/*      // completed={"Energy " + `${30}`}*/}
-          {/*      labelAlignment="left"*/}
-          {/*      labelColor="#000000"*/}
-          {/*      // margin="20px"*/}
-          {/*      width="100"*/}
-          {/*      height="80"*/}
-          {/*      // transition= 'width 1s ease-in-out'*/}
-          {/*      transitionDuration="1s"*/}
-          {/*      transitionTimingFunction="ease-in-out"*/}
-          {/*      // transitionDuration="1"*/}
-          {/*      // transition="width 1s ease-in-out 0s"*/}
-          {/*      maxCompleted={30}*/}
-          {/*      customLabel={"Energy " + `${categoryScores.energyScore}`}*/}
-          {/*    />*/}
-          {/*  </div>*/}
           <div className="box font-weight-bold">
             <p>transportation</p>
           </div>
@@ -386,7 +384,7 @@ const Profile = () => {
               transitionTimingFunction="ease-in-out"
               // transitionDuration="1"
               // transition="width 1s ease-in-out 0s"
-              maxCompleted={100  }
+              maxCompleted={100}
               // customLabel={"Energy " + `${categoryScores.energyScore}`}
             />
           </div>
