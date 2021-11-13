@@ -5,7 +5,6 @@ const HorizontalBarChart = (props) => {
   let labels = [];
   let scores = [];
   for (let [key, value] of Object.entries(props.catScores)) {
-    console.log(`${key}`)
     if (key === 'transScore') {
       key = 'Transportation';
     } else if (key === 'recycScore') {
@@ -26,14 +25,6 @@ const HorizontalBarChart = (props) => {
       {
         label: 'Points in category',
         data: [scores[0], scores[1], scores[2], scores[3], scores[4]],
-        // backgroundColor: [
-        //   'rgba(255, 99, 132, 0.2)',
-        //   'rgba(54, 162, 235, 0.2)',
-        //   'rgba(255, 206, 86, 0.2)',
-        //   'rgba(75, 192, 192, 0.2)',
-        //   'rgba(153, 102, 255, 0.2)',
-        //   'rgba(255, 159, 64, 0.2)',
-        // ],
         backgroundColor: [
           'rgba(32, 128, 74, 0.6)',
           'rgba(104, 191, 142, 0.6)',
