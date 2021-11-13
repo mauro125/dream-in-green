@@ -51,7 +51,9 @@ const Questionnaire = () => {
     }
     if (user){
       try {
-        await addScoreToDb( user.uid, total, new Date(), catScores);
+        //catScores = old scores plus new scores
+        //categoryScores = only new scores no old scores added
+        await addScoreToDb( user.uid, total, new Date(), catScores, categoryScores );
       } catch (e) {
         console.log(e);
       }
