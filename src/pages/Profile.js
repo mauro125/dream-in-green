@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
@@ -20,19 +20,23 @@ const Profile = () => {
     categoryScores,
     hasCatScore,
     name,
+    scores,
+    setScores,
+    setStringDate
   } = useAuth();
   const redirect = useHistory();
 
   const [school, setSchool] = useState('');
   const [last, setLast] = useState('');
   const [avg, setAvg] = useState(0);
-  const [scores, setScores] = useState(null);
   const [cuteName, setCuteName] = useState('');
   const [data, setData] = useState([]);
   const [toggleBarGraph, setToggleBarGraph] = useState(false);
   const [toggleLineGraph, setToggleLineGraph] = useState(true);
   const [togglePieChart, setTogglePieChart] = useState(false);
   const fileUpload = useRef(null);
+
+  let newArr = []
 
   function handleLogOut() {
     logout();
@@ -47,7 +51,17 @@ const Profile = () => {
       .then(function (doc) {
         if (doc.data().scores) {
           let arr = doc.data().scores.reverse();
+          newArr = doc.data().scores.reverse();
           setScores(arr);
+
+          for (let i = 0; i < newArr.length; i++) {
+            newArr[i].createdAt = (month[newArr[i].createdAt.toDate().getMonth()] +
+              '-' +
+              newArr[i].createdAt.toDate().getDate() +
+              '-' +
+              newArr[i].createdAt.toDate().getFullYear());
+          }
+          setStringDate(newArr)
           setLast(
             month[arr[0].createdAt.toDate().getMonth()] +
             ' ' +
@@ -116,6 +130,10 @@ const Profile = () => {
     setToggleLineGraph(false)
   }
 
+  const passDate = (month, day, year) => {
+    let date = month + '-' + day + '-' + year;
+    redirect.push('/profile/' + date);
+  }
 
   const month = [
     'January',
@@ -144,6 +162,13 @@ const Profile = () => {
               {score.createdAt.toDate().getFullYear()}
             </td>
             <td>{score.score}</td>
+            <td>
+              <button
+                className='btn btn-primary'
+                onClick={() => passDate(month[score.createdAt.toDate().getMonth()], score.createdAt.toDate().getDate(), score.createdAt.toDate().getFullYear())}>
+                Detailed Info
+              </button>
+            </td>
           </tr>
         );
       })
@@ -230,7 +255,7 @@ const Profile = () => {
               Category Scores
             </button>}
             <div className="divider"/>
-            {hasCatScore &&<button
+            {hasCatScore && <button
               type='button'
               className='btn btn-primary py-1 px-3 mb-2'
               onClick={handlePieChartToggle}
@@ -251,7 +276,8 @@ const Profile = () => {
           {toggleBarGraph && (<Card className='profile-card' border='primary'>
             <br/>
             {toggleBarGraph && hasCatScore && <HorizontalBarChart catScores={categoryScores}/>}
-          {toggleBarGraph && !hasCatScore && <h3 className=' h3-align'>Take a survey to get more details on how you are doing!</h3>}
+            {toggleBarGraph && !hasCatScore &&
+            <h3 className=' h3-align'>Take a survey to get more details on how you are doing!</h3>}
             <br/>
           </Card>)}
 
