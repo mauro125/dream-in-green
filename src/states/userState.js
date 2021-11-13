@@ -37,6 +37,8 @@ export function UserProvider({ children }) {
   const [categoryScores, setCategoryScores] = useState({});
   const [hasCatScore, setHasCatScore] = useState();
   const [name, setName] = useState('');
+  const [scores, setScores] = useState(null);
+  const [stringDate, setStringDate] = useState([]);
   //sign up through firebase api
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -58,11 +60,14 @@ export function UserProvider({ children }) {
         });
   }
 
-  function addScoreToDb(uid, score, createdAt, catScores) {
+  //catScores= old scores plus new scores
+  //categoryScores = only new scores no old scores added
+  function addScoreToDb(uid, score, createdAt, catScores, categoryScores) {
     usersCollection.doc(uid).update({
       scores: firebase.firestore.FieldValue.arrayUnion({
         score,
         createdAt,
+        categoryScores
       }),
       average: 100,
       catScores
@@ -204,7 +209,11 @@ export function UserProvider({ children }) {
     getCatScores,
     hasCatScore,
     name,
-    setName
+    setName,
+    scores,
+    setScores,
+    stringDate,
+    setStringDate
   };
 
   return (
