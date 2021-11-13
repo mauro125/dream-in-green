@@ -8,6 +8,7 @@ import nicknames from '../assets/nicknames';
 import LineGraph from '../components/myLineGraph'
 import HorizontalBarChart from "../components/BarGraph";
 import DoughnutChart from "../components/DoughnutChart";
+import ProgressBar from "@ramonak/react-progress-bar";
 
 const Profile = () => {
   const {
@@ -149,14 +150,16 @@ const Profile = () => {
     'November',
     'December',
   ];
-
+  const navigateToScore = ()=>{
+    console.log('navigating to score')
+  }
   const htmlOfScores =
     scores !== null && scores !== undefined
       ? scores.slice(0, 8).map((score, i) => {
         return (
           <tr key={i}>
             <td>{scores.length - i}</td>
-            <td>
+            <td onClick={navigateToScore}>
               {month[score.createdAt.toDate().getMonth()]}{' '}
               {score.createdAt.toDate().getDate()},{' '}
               {score.createdAt.toDate().getFullYear()}
@@ -316,6 +319,78 @@ const Profile = () => {
           <br/>
           <br/>
           <br/>
+        </div>
+        <div className='col m-3 profile-user-col'>
+          {/*<Card className='right-column' border='primary'>*/}
+          {/*  <div className="box">Energy</div>*/}
+          {/*  <div className="box ">*/}
+          {/*    <ProgressBar*/}
+          {/*      // completed="20"*/}
+          {/*      completed={`${categoryScores.energyScore}`}*/}
+          {/*      // completed={"Energy " + `${30}`}*/}
+          {/*      labelAlignment="left"*/}
+          {/*      labelColor="#000000"*/}
+          {/*      // margin="20px"*/}
+          {/*      width="100"*/}
+          {/*      height="80"*/}
+          {/*      // transition= 'width 1s ease-in-out'*/}
+          {/*      transitionDuration="1s"*/}
+          {/*      transitionTimingFunction="ease-in-out"*/}
+          {/*      // transitionDuration="1"*/}
+          {/*      // transition="width 1s ease-in-out 0s"*/}
+          {/*      maxCompleted={30}*/}
+          {/*      customLabel={"Energy " + `${categoryScores.energyScore}`}*/}
+          {/*    />*/}
+          {/*  </div>*/}
+          <div className="box font-weight-bold">
+            <p>transportation</p>
+          </div>
+          <div className="box ">
+            <ProgressBar
+              // completed="20"
+              completed={`${categoryScores.transScore}`}
+              // completed={"Energy " + `${30}`}
+              labelAlignment="center"
+              labelColor="#000000"
+              bgColor="#68bf8e"
+              // margin="20px"
+              width="100"
+              height="80"
+              // transition= 'width 1s ease-in-out'
+              transitionDuration="1s"
+              transitionTimingFunction="ease-in-out"
+              // transitionDuration="1"
+              // transition="width 1s ease-in-out 0s"
+              maxCompleted={100  }
+              // customLabel={"Energy " + `${categoryScores.energyScore}`}
+            />
+          </div>
+          <br/>
+          <br/>
+          <div className="box font-weight-bold">
+            <p>Energy</p>
+          </div>
+          <div className="box ">
+            <ProgressBar
+              // completed="20"
+              completed={`${categoryScores.energyScore}`}
+              // completed={"Energy " + `${30}`}
+              labelAlignment="center"
+              labelColor="#000000"
+              bgColor="#68bf8e"
+              // margin="20px"
+              width="100"
+              height="80"
+              // transition= 'width 1s ease-in-out'
+              transitionDuration="1s"
+              transitionTimingFunction="ease-in-out"
+              // transitionDuration="1"
+              // transition="width 1s ease-in-out 0s"
+              maxCompleted={100  }
+              // customLabel={"Energy " + `${categoryScores.energyScore}`}
+            />
+          </div>
+          {/*</Card>*/}
         </div>
       </div>
     </div>
