@@ -33,8 +33,8 @@ export const sortScore = (questionCategory, score, setCategoryScores, categorySc
     }
     sortedCatScores = {transScore,waterScore,energyScore,recycScore,purchScore}
     currentCatScores = {currentTransScore,currentWaterScore,currentEnergyScore,currentRecycScore,currentPurchScore}
-
     setCategoryScores(sortedCatScores)
     setCurrentCatScores(currentCatScores)
+
     return {sortedCatScores, currentCatScores};
 }

@@ -26,20 +26,6 @@ const DoughnutChart = (props) => {
       {
         label: 'Points in category',
         data: [scores[0], scores[1], scores[2], scores[3], scores[4]],
-        // backgroundColor: [
-        //   'rgba(32, 128, 74, 0.6)',
-        //   'rgba(104, 191, 142, 0.6)',
-        //   'rgba(32, 128, 74, 0.6)',
-        //   'rgba(104, 191, 142, 0.6)',
-        //   'rgba(32, 128, 74, 0.6)',
-        // ],
-        // borderColor: [
-        //   'rgba(32, 128, 74, 1)',
-        //   'rgba(104, 191, 142, 1)',
-        //   'rgba(32, 128, 74, 1)',
-        //   'rgba(104, 191, 142, 1)',
-        //   'rgba(32, 128, 74, 1)',
-        // ],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
