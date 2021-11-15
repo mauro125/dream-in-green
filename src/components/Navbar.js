@@ -23,6 +23,8 @@ const NavBar = () => {
       setActiveKey(2);
     } else if (location.pathname.startsWith('/profile')) {
       setActiveKey(3);
+    } else if (location.pathname.startsWith('/about-us')) {
+      setActiveKey(4);
     } else if (location.pathname == '/') {
       setActiveKey(0);
     } else {
@@ -57,6 +59,9 @@ const NavBar = () => {
             </Nav.Link>
             <Nav.Link as={Link} to='/learn' eventKey={2}>
               Learn
+            </Nav.Link>
+            <Nav.Link as={Link} to='/about-us' eventKey={4}>
+              About Us
             </Nav.Link>
             {user && (
               <Nav.Link as={Link} to='/profile' eventKey={3}>
