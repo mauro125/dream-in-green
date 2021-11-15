@@ -8,7 +8,6 @@ import nicknames from '../assets/nicknames';
 import LineGraph from '../components/myLineGraph'
 import HorizontalBarChart from "../components/BarGraph";
 import DoughnutChart from "../components/DoughnutChart";
-import ProgressBar from "@ramonak/react-progress-bar";
 import Modal from "../components/Modal";
 import DetailItem from "../components/DetailItem";
 
@@ -42,6 +41,7 @@ const Profile = () => {
   const fileUpload = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [filteredArr, setFilteredArr] = useState([])
+  const [style, setStyle] = useState({display: 'none'});
 
   let newArr = []
   let arr = [];
@@ -165,7 +165,13 @@ const Profile = () => {
     scores !== null && scores !== undefined
       ? scores.slice(0, 8).map((score, i) => {
         return (
-          <tr key={i}>
+          <tr key={i}
+              onMouseEnter={e => {
+                setStyle({display: 'block'});
+              }}
+              onMouseLeave={e => {
+                setStyle({display: 'none'})
+              }}>
             <td>{scores.length - i}</td>
             <td>
               {month[score.createdAt.toDate().getMonth()]}{' '}
@@ -173,9 +179,10 @@ const Profile = () => {
               {score.createdAt.toDate().getFullYear()}
             </td>
             <td>{score.score}</td>
-            <td>
+            <td >
               <button
                 className='btn btn-primary'
+                style={style}
                 onClick={() => {
                   passDate(month[score.createdAt.toDate().getMonth()], score.createdAt.toDate().getDate(), score.createdAt.toDate().getFullYear())
                 }}>
@@ -196,10 +203,8 @@ const Profile = () => {
             <br/>
             <DetailItem
               scores={filteredArr}
+              toggle={toggleModal}
             />
-            <button onClick={toggleModal} className="btn btn-primary my-2 py-3 px-5">
-              Close
-            </button>
           </Modal>)}
         <div className='col m-3 profile-user-col'>
           <Card className='profile-card' border='primary'>
@@ -338,29 +343,6 @@ const Profile = () => {
           <br/>
           <br/>
           <br/>
-        </div>
-        <div className='col m-3 profile-user-col'>
-          <div className="box font-weight-bold">
-            <p>transportation</p>
-          </div>
-          <div className="box">
-            <ProgressBar
-              completed={`${categoryScores.transScore}`}
-              labelAlignment="center"
-              labelColor="#000000"
-              bgColor="#68bf8e"
-              width="100"
-              height="80"
-              transitionDuration="1s"
-              transitionTimingFunction="ease-in-out"
-              maxCompleted={100}
-            />
-          </div>
-          <br/>
-          <br/>
-          <div className="box font-weight-bold">
-            <p>Energy</p>
-          </div>
         </div>
       </div>
     </div>
