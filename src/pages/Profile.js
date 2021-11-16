@@ -8,8 +8,8 @@ import nicknames from '../assets/nicknames';
 import LineGraph from '../components/myLineGraph'
 import HorizontalBarChart from "../components/BarGraph";
 import DoughnutChart from "../components/DoughnutChart";
-import ProgressBar from "@ramonak/react-progress-bar";
 import Modal from "../components/Modal";
+import DetailItem from "../components/DetailItem";
 
 const Profile = () => {
   const {
@@ -25,6 +25,7 @@ const Profile = () => {
     scores,
     setScores,
     setStringDate,
+    stringDate,
     currentCatScores
   } = useAuth();
   const redirect = useHistory();
@@ -39,8 +40,11 @@ const Profile = () => {
   const [togglePieChart, setTogglePieChart] = useState(false);
   const fileUpload = useRef(null);
   const [showModal, setShowModal] = useState(false);
+  const [filteredArr, setFilteredArr] = useState([])
+  const [style, setStyle] = useState({display: 'none'});
 
   let newArr = []
+  let arr = [];
 
   function handleLogOut() {
     logout();
@@ -136,12 +140,10 @@ const Profile = () => {
 
   const passDate = (month, day, year) => {
     setShowModal(true)
-    let date = month + day  + year;
-    console.log(currentCatScores)
-    let arr = [];
-    arr = currentCatScores.map(item => item.createdAt === (month+day+year))
+    let date = month + '-' + day + '-' + year;
+    arr = stringDate.filter(item => item.createdAt === (date))
+    setFilteredArr(arr)
     console.log(arr)
-    // redirect.push('/profile/' + date);
   }
 
   const month = [
@@ -158,27 +160,31 @@ const Profile = () => {
     'November',
     'December',
   ];
-  const navigateToScore = ()=>{
-    console.log('navigating to score')
-  }
+
   const htmlOfScores =
     scores !== null && scores !== undefined
       ? scores.slice(0, 8).map((score, i) => {
         return (
-          <tr key={i}>
+          <tr key={i}
+              onMouseEnter={e => {
+                setStyle({display: 'block'});
+              }}
+              onMouseLeave={e => {
+                setStyle({display: 'none'})
+              }}>
             <td>{scores.length - i}</td>
-            <td onClick={navigateToScore}>
+            <td>
               {month[score.createdAt.toDate().getMonth()]}{' '}
               {score.createdAt.toDate().getDate()},{' '}
               {score.createdAt.toDate().getFullYear()}
             </td>
             <td>{score.score}</td>
-            <td>
+            <td >
               <button
                 className='btn btn-primary'
+                style={style}
                 onClick={() => {
-                  // passDate(month[score.createdAt.toDate().getMonth()], score.createdAt.toDate().getDate(), score.createdAt.toDate().getFullYear());
-                  passDate(month[score.createdAt], score.createdAt, score.createdAt);
+                  passDate(month[score.createdAt.toDate().getMonth()], score.createdAt.toDate().getDate(), score.createdAt.toDate().getFullYear())
                 }}>
                 Detailed Info
               </button>
@@ -187,17 +193,18 @@ const Profile = () => {
         );
       })
       : '';
-  const toggleModal = () => setShowModal( !showModal );
+  const toggleModal = () => setShowModal(!showModal);
   return (
     <div className='container mw-100'>
       <div className='row profile-container'>
-        {(showModal)&& (
-          <Modal isOpen={ showModal } toggle={ toggleModal } >
+        {(showModal) && (
+          <Modal isOpen={showModal} toggle={toggleModal} ariaHideApp={false}>
             <h1>Detailed Info</h1>
-
-            <button onClick={ toggleModal } className="btn btn-primary my-2 py-3 px-5" >
-              Close
-            </button>
+            <br/>
+            <DetailItem
+              scores={filteredArr}
+              toggle={toggleModal}
+            />
           </Modal>)}
         <div className='col m-3 profile-user-col'>
           <Card className='profile-card' border='primary'>
@@ -309,14 +316,12 @@ const Profile = () => {
 
             {togglePieChart && !hasCatScore &&
             (<div>
-              {/*<br/>*/}
               <h3 className=' h3-align'>Take a survey to get more details on how you are doing!</h3>
             </div>)}
             <br/>
           </Card>)}
           <br/>
           <br/>
-          {/*<br/>*/}
           <Card className='profile-card' border='primary'>
             <br/>
             <h3 className='mb-0 text-primary'>Survey History</h3>
@@ -339,57 +344,7 @@ const Profile = () => {
           <br/>
           <br/>
         </div>
-        <div className='col m-3 profile-user-col'>
-          <div className="box font-weight-bold">
-            <p>transportation</p>
-          </div>
-          <div className="box ">
-            <ProgressBar
-              // completed="20"
-              completed={`${categoryScores.transScore}`}
-              // completed={"Energy " + `${30}`}
-              labelAlignment="center"
-              labelColor="#000000"
-              bgColor="#68bf8e"
-              // margin="20px"
-              width="100"
-              height="80"
-              // transition= 'width 1s ease-in-out'
-              transitionDuration="1s"
-              transitionTimingFunction="ease-in-out"
-              // transitionDuration="1"
-              // transition="width 1s ease-in-out 0s"
-              maxCompleted={100  }
-              // customLabel={"Energy " + `${categoryScores.energyScore}`}
-            />
-          </div>
-          <br/>
-          <br/>
-          <div className="box font-weight-bold">
-            <p>Energy</p>
-          </div>
-          <div className="box ">
-            <ProgressBar
-              // completed="20"
-              completed={`${categoryScores.energyScore}`}
-              // completed={"Energy " + `${30}`}
-              labelAlignment="center"
-              labelColor="#000000"
-              bgColor="#68bf8e"
-              // margin="20px"
-              width="100"
-              height="80"
-              // transition= 'width 1s ease-in-out'
-              transitionDuration="1s"
-              transitionTimingFunction="ease-in-out"
-              // transitionDuration="1"
-              // transition="width 1s ease-in-out 0s"
-              maxCompleted={100}
-              // customLabel={"Energy " + `${categoryScores.energyScore}`}
-            />
-          </div>
-          {/*</Card>*/}
-        </div>
+
       </div>
     </div>
   );
