@@ -99,7 +99,7 @@ const NavBar = () => {
             </Dropdown.Toggle>
             <Dropdown.Menu className={'dropdown-menu'}>
               <Dropdown.Item id='hovering' as={Link} to='/'>Home</Dropdown.Item>
-              <Dropdown.Item id='hovering' href="#/action-2">Another action</Dropdown.Item>
+              <Dropdown.Item id='hovering' as={Link} to='/questionnaire'>Take a Survey</Dropdown.Item>
               <Dropdown.Divider/>
               <Dropdown.Item id='hovering' onClick={handleLogOut}>Logout</Dropdown.Item>
             </Dropdown.Menu>

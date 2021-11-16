@@ -2,7 +2,6 @@ import React from 'react';
 import {Doughnut} from 'react-chartjs-2';
 
 const DoughnutChart = (props) => {
-
   let labels = [];
   let scores = [];
   for (let [key, value] of Object.entries(props.catScores)) {
@@ -56,8 +55,8 @@ const DoughnutChart = (props) => {
     responsive: true,
     plugins: {
       legend: {
-        display: false,
-        position: 'left',
+        display: true,
+        position: 'bottom',
       },
       title: {
         display: true,
