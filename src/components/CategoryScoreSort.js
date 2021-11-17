@@ -1,40 +1,83 @@
-export const sortScore = (questionCategory, score, setCategoryScores, categoryScores, setCurrentCatScores) => {
-    let sortedCatScores;
-    let currentCatScores;
-    let i = 0;
-    let transScore = categoryScores.transScore;
-    let waterScore = categoryScores.waterScore;
-    let energyScore = categoryScores.energyScore;
-    let recycScore = categoryScores.recycScore;
-    let purchScore = categoryScores.purchScore;
+export const sortScore = (questionCategory, score, setCategoryScores, categoryScores, setCurrentCatScores, setBadges) => {
+  let sortedCatScores;
+  let currentCatScors;
+  let badgges;
+  let transpBadge = {
+    awarded: false,
+    displayModal:false
+  };
+  let waterBadge = {
+    awarded: false,
+    displayModal:false};
+  let energyBadge = {
+    awarded: false,
+    displayModal:false};
+  let recycBadge = {
+    awarded: false,
+    displayModal:false};
+  let purchBadge = {
+    awarded: false,
+    displayModal:false};
+  let i = 0;
+  let transScore = categoryScores.transScore;
+  let waterScore = categoryScores.waterScore;
+  let energyScore = categoryScores.energyScore;
+  let recycScore = categoryScores.recycScore;
+  let purchScore = categoryScores.purchScore;
 
-    let currentTransScore = 0;
-    let currentWaterScore = 0;
-    let currentEnergyScore = 0;
-    let currentRecycScore = 0;
-    let currentPurchScore = 0;
-    for (; i < 8; i++) {
-        if (questionCategory[i] === "transportation") {
-            transScore += score[i]
-            currentTransScore += score[i]
-        } else if (questionCategory[i] === "water") {
-            waterScore += score[i];
-            currentWaterScore += score[i]
-        } else if (questionCategory[i] === "energy") {
-            energyScore += score[i];
-            currentEnergyScore += score[i]
-        } else if (questionCategory[i] === "recycling") {
-            recycScore += score[i];
-            currentRecycScore += score[i]
-        } else if (questionCategory[i] === "purchasing") {
-            purchScore += score[i];
-            currentPurchScore += score[i]
-        }
+  let currentTransScore = 0;
+  let currentWaterScore = 0;
+  let currentEnergyScore = 0;
+  let currentRecycScore = 0;
+  let currentPurchScore = 0;
+  for (; i < 8; i++) {
+    if (questionCategory[i] === "transportation") {
+      transScore += score[i]
+      currentTransScore += score[i]
+    } else if (questionCategory[i] === "water") {
+      waterScore += score[i];
+      currentWaterScore += score[i]
+    } else if (questionCategory[i] === "energy") {
+      energyScore += score[i];
+      currentEnergyScore += score[i]
+    } else if (questionCategory[i] === "recycling") {
+      recycScore += score[i];
+      currentRecycScore += score[i]
+    } else if (questionCategory[i] === "purchasing") {
+      purchScore += score[i];
+      currentPurchScore += score[i]
     }
-    sortedCatScores = {transScore,waterScore,energyScore,recycScore,purchScore}
-    currentCatScores = {currentTransScore,currentWaterScore,currentEnergyScore,currentRecycScore,currentPurchScore}
-    setCategoryScores(sortedCatScores)
-    setCurrentCatScores(currentCatScores)
+  }
 
-    return {sortedCatScores, currentCatScores};
+  let cat = [transScore,waterScore,energyScore,recycScore,purchScore];
+  let bdg = [transpBadge,waterBadge,energyBadge,recycBadge,purchBadge]
+  let arr = [];
+  for (let i = 0; i < cat.length; i++){
+    if ((cat[i] >= 300 && cat[i] <= 315) && bdg[i].awarded === false) {
+      arr[i] = {
+        awarded: true,
+        displayModal: true
+      }
+    } else {
+      arr[i] = {
+        given: true,
+        displayModal: false
+      }
+    }
+  }
+
+  transpBadge = arr[0];
+  waterBadge = arr[1];
+  energyBadge = arr[2];
+  recycBadge = arr[3];
+  purchBadge = arr[4];
+
+  sortedCatScores = {transScore, waterScore, energyScore, recycScore, purchScore}
+  currentCatScors = {currentTransScore, currentWaterScore, currentEnergyScore, currentRecycScore, currentPurchScore}
+  badgges = {transpBadge, waterBadge, energyBadge, recycBadge, purchBadge}
+  console.log(badgges)
+  setCategoryScores(sortedCatScores)
+  setCurrentCatScores(currentCatScors)
+  setBadges(badgges)
+  return {sortedCatScores, currentCatScors, badgges};
 }

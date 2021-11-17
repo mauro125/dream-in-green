@@ -93,7 +93,7 @@ const Home = () => {
                       <div className='col-lg-6 text-center txt-md-left'>
                         <div className='row mb-3'>
                           <h1 className='display-4 font-weight-bold'>
-                            Learn how your choice of travel can affect the environment.
+                            Learn how your choice of travel can affect the environment
                           </h1>
                         </div>
 
@@ -145,7 +145,7 @@ const Home = () => {
                       <div className='col-lg-6 text-center txt-md-left'>
                         <div className='row mb-3'>
                           <h1 className='display-4 font-weight-bold'>
-                            Learn how much energy is being used in your house and lower your emissions.
+                            Learn how much energy is being used in your house and lower your emissions
                           </h1>
                         </div>
                         {user && (<Link
@@ -196,7 +196,7 @@ const Home = () => {
                       <div className='col-lg-6 text-center txt-md-left'>
                         <div className='row mb-3'>
                           <h1 className='display-4 font-weight-bold'>
-                            Learn how the foods you consume can affect the environment.
+                            Learn how the foods you consume can affect the environment
                           </h1>
                         </div>
                         {user && (<Link
@@ -247,7 +247,7 @@ const Home = () => {
                       <div className='col-lg-6 text-center txt-md-left'>
                         <div className='row mb-3'>
                           <h1 className='display-4 font-weight-bold'>
-                            Learn how shopping affects the environment.
+                            Learn how shopping affects the environment
                           </h1>
                         </div>
                         {user && (<Link
@@ -298,7 +298,7 @@ const Home = () => {
                       <div className='col-lg-6 text-center txt-md-left'>
                         <div className='row mb-3'>
                           <h1 className='display-4 font-weight-bold'>
-                            Learn how apparel production affects the environment.
+                            Learn how apparel production affects the environment
                           </h1>
                         </div>
                         {user && (<Link

@@ -35,11 +35,16 @@ export function UserProvider({ children }) {
   //state used to store each question category
   const [questionCategory, setQuestionCategory] = useState();
   const [categoryScores, setCategoryScores] = useState({});
+
+  //state to check if catScore is empty or not, to display or not, graphs/buttons in profile page
   const [hasCatScore, setHasCatScore] = useState();
   const [name, setName] = useState('');
   const [scores, setScores] = useState(null);
+
+  //state used to store category scores after taking survey, not adding old score
   const [currentCatScores, setCurrentCatScores] = useState({});
   const [stringDate, setStringDate] = useState([]);
+  const [badges, setBadges] = useState({});
   //sign up through firebase api
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -63,7 +68,7 @@ export function UserProvider({ children }) {
 
   //catScores= old scores plus new scores
   //currentQuizCatScore = only new scores no old scores added
-  function addScoreToDb(uid, score, createdAt, catScores, currentQuizCatScore) {
+  function addScoreToDb(uid, score, createdAt, catScores, currentQuizCatScore, allBadges) {
     usersCollection.doc(uid).update({
       scores: firebase.firestore.FieldValue.arrayUnion({
         score,
@@ -71,7 +76,8 @@ export function UserProvider({ children }) {
         currentQuizCatScore
       }),
       average: 100,
-      catScores
+      catScores,
+      allBadges
     });
   }
 
@@ -225,7 +231,9 @@ export function UserProvider({ children }) {
     stringDate,
     setStringDate,
     currentCatScores,
-    setCurrentCatScores
+    setCurrentCatScores,
+    badges,
+    setBadges
   };
 
   return (
