@@ -1,4 +1,5 @@
-export const sortScore = (questionCategory, score, setCategoryScores, categoryScores, setCurrentCatScores, setBadges, badges) => {
+export const sortScore = (questionCategory, score, setCategoryScores, categoryScores, setCurrentCatScores, setBadges,
+                          badges, setDisplayBadgeModal) => {
   let sortedCatScores;
   let currentCatScors;
   let badgges;
@@ -48,23 +49,24 @@ export const sortScore = (questionCategory, score, setCategoryScores, categorySc
         awarded: true,
         displayModal: true
       }
+      setDisplayBadgeModal(true)
     } else {
+      if (bdg[i].awarded === true){
+        arr[i] = {
+          awarded: true,
+          displayModal: false
+        }
+      } else
       arr[i] = {
-        given: true,
+        awarded: false,
         displayModal: false
       }
     }
   }
 
-  transpBadge = arr[0];
-  waterBadge = arr[1];
-  energyBadge = arr[2];
-  recycBadge = arr[3];
-  purchBadge = arr[4];
-
   sortedCatScores = {transScore, waterScore, energyScore, recycScore, purchScore}
   currentCatScors = {currentTransScore, currentWaterScore, currentEnergyScore, currentRecycScore, currentPurchScore}
-  badgges = {transpBadge, waterBadge, energyBadge, recycBadge, purchBadge}
+  badgges = {transpBadge: arr[0], waterBadge: arr[1], energyBadge: arr[2], recycBadge: arr[3], purchBadge: arr[4]}
 
   setCategoryScores(sortedCatScores)
   setCurrentCatScores(currentCatScors)

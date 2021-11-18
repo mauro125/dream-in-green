@@ -45,6 +45,7 @@ export function UserProvider({children}) {
   const [currentCatScores, setCurrentCatScores] = useState({});
   const [stringDate, setStringDate] = useState([]);
   const [badges, setBadges] = useState({});
+  const [displayBadgeModal, setDisplayBadgeModal] = useState(false);
 
   //sign up through firebase api
   function signup(email, password) {
@@ -231,6 +232,19 @@ export function UserProvider({children}) {
     }
   }
 
+  //update if to not show modal of badge awarded
+  const updateBadges = (allBadges) =>{
+    allBadges.energyBadge.displayModal = false;
+    allBadges.purchBadge.displayModal = false;
+    allBadges.recycBadge.displayModal = false;
+    allBadges.transpBadge.displayModal = false;
+    allBadges.waterBadge.displayModal = false;
+
+    usersCollection.doc(user.uid).update({
+      allBadges
+    });
+  }
+
   //useContext state to keep track of, where we also store useful functions and the user
   const defaultValue = {
     user,
@@ -262,7 +276,10 @@ export function UserProvider({children}) {
     currentCatScores,
     setCurrentCatScores,
     badges,
-    setBadges
+    setBadges,
+    displayBadgeModal,
+    setDisplayBadgeModal,
+    updateBadges
   };
 
   return (

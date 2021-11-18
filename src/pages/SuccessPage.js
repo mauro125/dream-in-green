@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Link, useParams} from 'react-router-dom';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
@@ -6,6 +6,8 @@ import {useAuth} from '../states/userState';
 import successImg from '../images/success-image.svg';
 import Confetti from "../components/Confetti";
 import DetailItem from "../components/DetailItem";
+import Modal from "../components/Modal";
+import BadgesModal from "../components/BadgesModal";
 
 const SuccessPage = () => {
   const {
@@ -14,9 +16,14 @@ const SuccessPage = () => {
     setTookQuizNotLoggedIn,
     tookQuizNotLoggedIn,
     notLoggedInTotal,
-    currentCatScores
+    currentCatScores,
+    badges,
+    displayBadgeModal,
+    setDisplayBadgeModal,
+    updateBadges,
   } = useAuth();
   const {score} = useParams();
+  let allBadges = badges;
 
   const quizNotLoggedIn = () => {
     setTookQuizNotLoggedIn(true)
@@ -35,10 +42,23 @@ const SuccessPage = () => {
     newUserQuizHandler()
   }
 
-  console.log(currentCatScores)
+  const toggleModal = () => {
+    setDisplayBadgeModal(!displayBadgeModal);
+    updateBadges(allBadges);
+  }
+
   return (
     <div className='container'>
       <Confetti/>
+      {(displayBadgeModal) && (
+        <Modal isOpen={displayBadgeModal} toggle={toggleModal} ariaHideApp={false}>
+          <Confetti/>
+          <br/>
+          <BadgesModal
+            badges={badges}
+            toggle={toggleModal}
+          />
+        </Modal>)}
       <div className='success-hero'>
         <img
           src={successImg}
