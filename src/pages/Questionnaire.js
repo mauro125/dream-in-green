@@ -31,8 +31,10 @@ const Questionnaire = () => {
     categoryScores,
     setCategoryScores,
     getCatScores,
-    currentCatScores,
-    setCurrentCatScores
+    setCurrentCatScores,
+    badges,
+    setBadges,
+    setDisplayBadgeModal
   } = useAuth();
 
   //Grabs questions from firebase realtime database
@@ -46,8 +48,8 @@ const Questionnaire = () => {
 
   const handleFinish = async () => {
     let total = 0;
-    let catScores = sortScore(questionCategory, score, setCategoryScores, categoryScores, setCurrentCatScores)
-
+    let catScores = sortScore(questionCategory, score, setCategoryScores, categoryScores, setCurrentCatScores,
+      setBadges, badges, setDisplayBadgeModal)
     for (const key in score) {
       total += score[key];
     }
@@ -55,13 +57,14 @@ const Questionnaire = () => {
       try {
         //catScores.sortedCatScores = old scores plus new scores
         //catScores.currentCatScores = only new scores no old scores added
-        await addScoreToDb( user.uid, total, new Date(), catScores.sortedCatScores, catScores.currentCatScores );
+        await addScoreToDb( user.uid, total, new Date(), catScores.sortedCatScores,
+          catScores.currentCatScors, catScores.badgges );
       } catch (e) {
         console.log(e);
       }
     } else{
       try {
-        await addAnonScoreToDb( age, total, catScores.sortedCatScores );
+        await addAnonScoreToDb( age, total, catScores.currentCatScors );
       } catch (e) {
         console.log(e);
       }
