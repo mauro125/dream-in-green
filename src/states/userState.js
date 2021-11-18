@@ -44,7 +44,14 @@ export function UserProvider({children}) {
   //state used to store category scores after taking survey, not adding old score
   const [currentCatScores, setCurrentCatScores] = useState({});
   const [stringDate, setStringDate] = useState([]);
-  const [badges, setBadges] = useState({});
+  const [badges, setBadges] = useState({
+    energyBadge: {awarded: false, displayModal: false},
+    purchBadge: {awarded: false, displayModal: false},
+    recycBadge: {awarded: false, displayModal: false},
+    transpBadge: {awarded: false, displayModal: false},
+    waterBadge: {awarded: false, displayModal: false},
+  });
+
   const [displayBadgeModal, setDisplayBadgeModal] = useState(false);
 
   //sign up through firebase api

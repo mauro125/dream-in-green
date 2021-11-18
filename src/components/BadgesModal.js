@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 import Card from "react-bootstrap/Card";
-import energyBadge from "../images/badges/energy.svg";
+import recyclingBadge from "../images/badges/recyclingBadge.svg";
+import waterBadge from "../images/badges/waterBadge.svg";
+import energyBadge from "../images/badges/energyBadge.svg";
+import purchasingBadge from "../images/badges/purchaseBadge.svg";
+import transportationBadge from "../images/badges/transportationBadge.svg";
 
 const BadgesModal = (props) => {
   let energy = false;
@@ -62,7 +66,7 @@ const BadgesModal = (props) => {
           </button>
           <div>
             <h3 className='p-3'>You earned the Purchase Badge!</h3>
-            <img src={energyBadge} width="100" height="100" alt='EnergyBadge'/>
+            <img src={purchasingBadge} width="100" height="100" alt='EnergyBadge'/>
             <h6 style={style} className='p-3'>Criteria: 300 points in Purchase category</h6>
           </div>
         </Card>
@@ -82,7 +86,7 @@ const BadgesModal = (props) => {
           </button>
           <div>
             <h3 className='p-3'>You earned the Recycle Badge!</h3>
-            <img src={energyBadge} width="100" height="100" alt='EnergyBadge'/>
+            <img src={recyclingBadge} width="100" height="100" alt='EnergyBadge'/>
             <h6 style={style} className='p-3'>Criteria: 300 points in Recycling category</h6>
           </div>
         </Card>
@@ -102,7 +106,7 @@ const BadgesModal = (props) => {
           </button>
           <div>
             <h3 className='p-3'>You earned the Transportation Badge!</h3>
-            <img src={energyBadge} width="100" height="100" alt='EnergyBadge'/>
+            <img src={transportationBadge} width="100" height="100" alt='EnergyBadge'/>
             <h6 style={style} className='p-3'>Criteria: 300 points in Transportation category</h6>
           </div>
         </Card>
@@ -122,7 +126,7 @@ const BadgesModal = (props) => {
           </button>
           <div>
             <h3 className='p-3'>You earned the Water Badge!</h3>
-            <img src={energyBadge} width="100" height="100" alt='EnergyBadge'/>
+            <img src={waterBadge} width="100" height="100" alt='EnergyBadge'/>
             <h6 style={style} className='p-3'>Criteria: 300 points in Water category</h6>
           </div>
         </Card>

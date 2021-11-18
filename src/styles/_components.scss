@@ -219,7 +219,7 @@
 
 .profile-container {
   margin: auto;
-  max-width: 1000px;
+  max-width: 1400px;
   min-height: $full-height;
   justify-content: center;
 }
@@ -322,6 +322,15 @@
 .profile-user-col {
   max-width: 360px;
   min-width: 320px;
+}
+
+.profile-user-badge {
+  max-width: 330px;
+  min-width: 330px;
+}
+
+.disable-badge {
+  opacity: 0.2;
 }
 
 .profile-table-col {

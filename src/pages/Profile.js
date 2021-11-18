@@ -10,7 +10,7 @@ import HorizontalBarChart from "../components/BarGraph";
 import DoughnutChart from "../components/DoughnutChart";
 import Modal from "../components/Modal";
 import DetailItem from "../components/DetailItem";
-
+import ProfileBadges from "../components/ProfileBadges";
 const Profile = () => {
   const {
     logout,
@@ -26,7 +26,7 @@ const Profile = () => {
     setScores,
     setStringDate,
     stringDate,
-    currentCatScores
+    badges
   } = useAuth();
   const redirect = useHistory();
 
@@ -344,7 +344,7 @@ const Profile = () => {
           <br/>
           <br/>
         </div>
-
+        <ProfileBadges badges={badges}/>
       </div>
     </div>
   );
