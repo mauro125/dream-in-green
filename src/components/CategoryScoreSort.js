@@ -1,23 +1,13 @@
-export const sortScore = (questionCategory, score, setCategoryScores, categoryScores, setCurrentCatScores, setBadges) => {
+export const sortScore = (questionCategory, score, setCategoryScores, categoryScores, setCurrentCatScores, setBadges, badges) => {
   let sortedCatScores;
   let currentCatScors;
   let badgges;
-  let transpBadge = {
-    awarded: false,
-    displayModal:false
-  };
-  let waterBadge = {
-    awarded: false,
-    displayModal:false};
-  let energyBadge = {
-    awarded: false,
-    displayModal:false};
-  let recycBadge = {
-    awarded: false,
-    displayModal:false};
-  let purchBadge = {
-    awarded: false,
-    displayModal:false};
+  let transpBadge = badges.transpBadge;
+  let waterBadge = badges.waterBadge;
+  let energyBadge = badges.energyBadge;
+  let recycBadge = badges.recycBadge;
+  let purchBadge = badges.purchBadge;
+
   let i = 0;
   let transScore = categoryScores.transScore;
   let waterScore = categoryScores.waterScore;
@@ -75,9 +65,10 @@ export const sortScore = (questionCategory, score, setCategoryScores, categorySc
   sortedCatScores = {transScore, waterScore, energyScore, recycScore, purchScore}
   currentCatScors = {currentTransScore, currentWaterScore, currentEnergyScore, currentRecycScore, currentPurchScore}
   badgges = {transpBadge, waterBadge, energyBadge, recycBadge, purchBadge}
-  console.log(badgges)
+
   setCategoryScores(sortedCatScores)
   setCurrentCatScores(currentCatScors)
   setBadges(badgges)
+
   return {sortedCatScores, currentCatScors, badgges};
 }

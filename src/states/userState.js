@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth, firestore } from '../assets/firebase';
+import React, {createContext, useContext, useEffect, useState} from 'react';
+import {auth, firestore} from '../assets/firebase';
 import defaultProfileImage from '../images/default-profile-img.jpg';
 import firebase from 'firebase/app';
 import 'firebase/storage';
@@ -17,7 +17,7 @@ export function useAuth() {
 }
 
 //useContext.Provider component that also sets the state for the rest of the App
-export function UserProvider({ children }) {
+export function UserProvider({children}) {
   //state to keep track of the user as they sign-up/log-in
   const [user, setUser] = useState();
 
@@ -45,6 +45,7 @@ export function UserProvider({ children }) {
   const [currentCatScores, setCurrentCatScores] = useState({});
   const [stringDate, setStringDate] = useState([]);
   const [badges, setBadges] = useState({});
+
   //sign up through firebase api
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -52,18 +53,18 @@ export function UserProvider({ children }) {
 
   function registerUser(uid, firstName, lastName, school) {
     usersCollection
-        .doc(uid)
-        .set({
-          firstName,
-          lastName,
-          school
-        })
-        .then(function () {
-          console.log('Document successfully written!');
-        })
-        .catch(function (error) {
-          console.error('Error writing document: ', error);
-        });
+      .doc(uid)
+      .set({
+        firstName,
+        lastName,
+        school
+      })
+      .then(function () {
+        console.log('Document successfully written!');
+      })
+      .catch(function (error) {
+        console.error('Error writing document: ', error);
+      });
   }
 
   //catScores= old scores plus new scores
@@ -81,19 +82,19 @@ export function UserProvider({ children }) {
     });
   }
 
-  function addAnonScoreToDb(age, score, catScores){
+  function addAnonScoreToDb(age, score, catScores) {
     anonCollection.doc().set({
       age: parseInt(age),
       score: score,
       createdAt: new Date(),
       catScores
     })
-        .then(function () {
-          console.log('Document successfully written!');
-        })
-        .catch(function (error) {
-          console.error('Error writing document: ', error);
-        });
+      .then(function () {
+        console.log('Document successfully written!');
+      })
+      .catch(function (error) {
+        console.error('Error writing document: ', error);
+      });
   }
 
   const [profilePic, setProfilePic] = useState(defaultProfileImage);
@@ -118,8 +119,8 @@ export function UserProvider({ children }) {
       The first parameter is the image we are compressing and the second parameter are the settings we chose for compressing the image
       The ref() parameter is what we are setting the path of the users profile picture in our firebase bucket
     */
-    imageCompression(imageFile, options).then( (compressedFile) => {
-      firebase.storage().ref('users/'+ user.uid + '/profile.jpg').put(compressedFile, cacheControl).then( () => {
+    imageCompression(imageFile, options).then((compressedFile) => {
+      firebase.storage().ref('users/' + user.uid + '/profile.jpg').put(compressedFile, cacheControl).then(() => {
         console.log("Successfully uploaded image")
       }).catch(error => {
         console.log("Error uploading image: " + error);
@@ -131,10 +132,10 @@ export function UserProvider({ children }) {
   }
 
   const downloadProfilePic = (user) => {
-    firebase.storage().ref('users/'+ user.uid + '/profile.jpg').getDownloadURL()
-        .then(imgURL => {
-          setProfilePic(imgURL);
-        }).catch(error => {
+    firebase.storage().ref('users/' + user.uid + '/profile.jpg').getDownloadURL()
+      .then(imgURL => {
+        setProfilePic(imgURL);
+      }).catch(error => {
       console.log('error img ' + error);
       setProfilePic(defaultProfileImage);
     })
@@ -173,29 +174,57 @@ export function UserProvider({ children }) {
     return auth.signOut();
   }
 
-  const getCatScores = () =>{
-    let catScores = { recycScore:0,transScore:0, waterScore:0, purchScore:0, energyScore:0 }
-    if(user) {
+  const getCatScores = () => {
+    let catScores = {recycScore: 0, transScore: 0, waterScore: 0, purchScore: 0, energyScore: 0}
+    let transpBadge = {
+      awarded: false,
+      displayModal: false
+    };
+    let waterBadge = {
+      awarded: false,
+      displayModal: false
+    };
+    let energyBadge = {
+      awarded: false,
+      displayModal: false
+    };
+    let recycBadge = {
+      awarded: false,
+      displayModal: false
+    };
+    let purchBadge = {
+      awarded: false,
+      displayModal: false
+    };
+    let allBadges ={transpBadge,waterBadge,energyBadge,recycBadge,purchBadge}
+    if (user) {
       usersCollection.doc(user.uid).get().then(function (doc) {
-        if (doc.data().catScores) {
-          if(doc.data().scores){
-            let arr = doc.data().scores;
-            setCurrentCatScores(arr)
+          if (doc.data().catScores) {
+            if (doc.data().scores) {
+              let arr = doc.data().scores;
+              setCurrentCatScores(arr)
+            }
+            let catScores = doc.data().catScores;
+            setCategoryScores(catScores)
+            //boolean to check if catScore is empty or not, if not empty able to display graphs/buttons
+            //in profile page
+            setHasCatScore(true);
+          } else {
+            //if user is logged in and for some reason doesn't have category score in firestore, we initalize to zero
+            setCategoryScores(catScores)
+            setCurrentCatScores(catScores)
+            //boolean to check to see if catScore is empty, if empty display message and don't display graphs/buttons
+            // in profile page
+            setHasCatScore(false);
           }
-          let catScores = doc.data().catScores;
-          setCategoryScores(catScores)
-          //boolean to check if catScore is empty or not, if not empty able to display graphs/buttons
-          //in profile page
-          setHasCatScore(true);
-        } else {
-          //if user is logged in and for some reason doesn't have category score in firestore, we initalize to zero
-          setCategoryScores(catScores)
-          setCurrentCatScores(catScores)
-          //boolean to check to see if catScore is empty, if empty display message and don't display graphs/buttons
-          // in profile page
-          setHasCatScore(false);
+          if (doc.data().allBadges) {
+            let allBadges = doc.data().allBadges;
+            setBadges(allBadges)
+          } else {
+            setBadges(allBadges);
+          }
         }
-      })
+      )
     } else {
       // anon submission, initialize category scores to zero
       setCategoryScores(catScores)
@@ -237,8 +266,8 @@ export function UserProvider({ children }) {
   };
 
   return (
-      <userContext.Provider value={defaultValue}>
-        {!loading && children}
-      </userContext.Provider>
+    <userContext.Provider value={defaultValue}>
+      {!loading && children}
+    </userContext.Provider>
   );
 }

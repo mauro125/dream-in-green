@@ -31,7 +31,6 @@ const Questionnaire = () => {
     categoryScores,
     setCategoryScores,
     getCatScores,
-    currentCatScores,
     setCurrentCatScores,
     badges,
     setBadges
@@ -48,8 +47,7 @@ const Questionnaire = () => {
 
   const handleFinish = async () => {
     let total = 0;
-    let catScores = sortScore(questionCategory, score, setCategoryScores, categoryScores, setCurrentCatScores, setBadges)
-    console.log(catScores)
+    let catScores = sortScore(questionCategory, score, setCategoryScores, categoryScores, setCurrentCatScores, setBadges, badges)
     for (const key in score) {
       total += score[key];
     }
