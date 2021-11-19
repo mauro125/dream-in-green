@@ -23,19 +23,11 @@ const Home = () => {
   return (
     <div>
       <div className='background-color1'>
-        <div className='container'>
-          <div className='row mt-5 hero-row-reverse-mobile home-row jumbotron'>
-            <Carousel>
+                   <Carousel>
 
               <Carousel.Item>
-                <Card className='profile-card' border='primary'>
-                  <div className="card-header">
-                    <img
-                      src={logoImg}
-                      className='nav-bar-logo center-logo-carousel p-3'
-                      alt='Dream In Green logo'
-                    />
-                  </div>
+                <Card className='profile-card'  border='none'>
+          
                   <div className='container'>
                     <div className='row mt-5 hero-row-reverse-mobile home-row jumbotron'>
                       <div className='col-lg-6 text-center txt-md-left'>
@@ -80,14 +72,8 @@ const Home = () => {
               </Carousel.Item>
 
               <Carousel.Item>
-                <Card className='profile-card' border='primary'>
-                  <div className="card-header">
-                    <img
-                      src={logoImg}
-                      className='nav-bar-logo center-logo-carousel p-3'
-                      alt='Dream In Green logo'
-                    />
-                  </div>
+                <Card className='profile-card'  border='none'>
+
                   <div className='container'>
                     <div className='row mt-5 hero-row-reverse-mobile home-row jumbotron'>
                       <div className='col-lg-6 text-center txt-md-left'>
@@ -132,14 +118,7 @@ const Home = () => {
               </Carousel.Item>
 
               <Carousel.Item>
-                <Card className='profile-card' border='primary'>
-                  <div className="card-header">
-                    <img
-                      src={logoImg}
-                      className='nav-bar-logo center-logo-carousel p-3'
-                      alt='Dream In Green logo'
-                    />
-                  </div>
+                <Card className='profile-card'  border='none'>
                   <div className='container'>
                     <div className='row mt-5 hero-row-reverse-mobile home-row jumbotron'>
                       <div className='col-lg-6 text-center txt-md-left'>
@@ -183,14 +162,8 @@ const Home = () => {
               </Carousel.Item>
 
               <Carousel.Item>
-                <Card className='profile-card' border='primary'>
-                  <div className="card-header">
-                    <img
-                      src={logoImg}
-                      className='nav-bar-logo center-logo-carousel p-3'
-                      alt='Dream In Green logo'
-                    />
-                  </div>
+                <Card className='profile-card'  border='none'>
+             
                   <div className='container'>
                     <div className='row mt-5 hero-row-reverse-mobile home-row jumbotron'>
                       <div className='col-lg-6 text-center txt-md-left'>
@@ -221,7 +194,7 @@ const Home = () => {
                           <img
                             src={food}
                             className='fluid-img'
-                            alt='Sitting on questionnaire'
+                            alt='Sitting on questionnai re'
                           />
                         </div>
                       </div>
@@ -234,14 +207,8 @@ const Home = () => {
               </Carousel.Item>
 
               <Carousel.Item>
-                <Card className='profile-card' border='primary'>
-                  <div className="card-header">
-                    <img
-                      src={logoImg}
-                      className='nav-bar-logo center-logo-carousel p-3'
-                      alt='Dream In Green logo'
-                    />
-                  </div>
+                <Card className='profile-card'  border='none'>
+    
                   <div className='container'>
                     <div className='row mt-5 hero-row-reverse-mobile home-row jumbotron'>
                       <div className='col-lg-6 text-center txt-md-left'>
@@ -285,14 +252,8 @@ const Home = () => {
               </Carousel.Item>
 
               <Carousel.Item>
-                <Card className='profile-card' border='primary'>
-                  <div className="card-header">
-                    <img
-                      src={logoImg}
-                      className='nav-bar-logo center-logo-carousel p-3'
-                      alt='Dream In Green logo'
-                    />
-                  </div>
+                <Card className='profile-card'  border='none'>
+
                   <div className='container'>
                     <div className='row mt-5 hero-row-reverse-mobile home-row jumbotron'>
                       <div className='col-lg-6 text-center txt-md-left'>
@@ -337,8 +298,6 @@ const Home = () => {
 
             </Carousel>
 
-          </div>
-        </div>
       </div>
       <div>
         <div className='container '>
