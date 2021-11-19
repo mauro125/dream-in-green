@@ -62,9 +62,14 @@
 }
 
 .background-color1 {
-  background-color: #f2f2f2;
+  background: rgb(2,0,36);
+  background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(56,145,95,1) 0%, rgba(242,242,242,1) 72%);
   .jumbotron {
     background: none;
   }
 }
-
+.carousel{
+  .btn {
+    background-color: #B94421;
+  }
+}
