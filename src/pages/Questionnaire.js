@@ -9,6 +9,8 @@ import {sortScore} from '../components/CategoryScoreSort';
 import firebase from 'firebase/app';
 import 'firebase/storage';
 import "firebase/database";
+import tips from '../assets/tips';
+
 
 let shuffled = false;
 let shuffledArr=[];
@@ -91,8 +93,8 @@ const Questionnaire = () => {
       setIndex(selectedIndex);
     }
   };
-
-  let uniqueQuestions = [...questions.reduce((question, obj) => question.set(obj.ques, obj),
+  let questions1 = questions.map((q, i, p)=>{q.id = i; return q});
+  let uniqueQuestions = [...questions1.reduce((question, obj) => question.set(obj.ques, obj),
       new Map()).values()]
 
   const shuffle = (array) =>{
@@ -123,7 +125,7 @@ const Questionnaire = () => {
     }
     shuffledArr = shuffle(categoryQuestions);
   }
-
+  let orderedTips = shuffledArr.map(q=>(tips[q.id-1])?tips[q.id-1]:tips[0]);
   const htmlOfItems = shuffledArr.slice(0, 8).map((question, i) => {
     return (
         <Carousel.Item key={i}>
@@ -149,7 +151,7 @@ const Questionnaire = () => {
        <div className='container-fluid'>
           <div className='row questionnaire-row'>
             <div className='col-lg-6 questionnaire-left'>
-              <TipsContainer index={index} />
+              <TipsContainer tips={orderedTips} index={index} />
             </div>
             <div className='col-lg-6 px-md-5 questionnaire-right'>
               <h2 className='questionnaire-step-counter'>
