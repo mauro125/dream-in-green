@@ -1,8 +1,9 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import tips from '../assets/tips';
+
 
 const TipsContainer = (props) => {
+  let tips = props.tips;
   const htmlOfItems = tips.map((tip, i) => {
     return (
       <Carousel.Item key={i}>
