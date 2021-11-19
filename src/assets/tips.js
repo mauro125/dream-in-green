@@ -40,6 +40,7 @@ const tips = [
   },
   {
     tip: "About 80% of our trash ends up in landfills which produces methane as it decomposes. Recycling and reusing items like water bottles and clothing can help drastically reduce your greenhouse gas emissions."
+    ,img: tip1,
   },
   {
     tip: 'E-Waste accounts for roughly 70% of all toxic waste and contains many toxic materials, including mercury, lead, arsenic, and cadmium. The best way to get rid of old devices is by trading them in at electronic recycling centers.',
